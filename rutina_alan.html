@@ -452,6 +452,7 @@
       <li>Ganar fuerza y masa en pierna SIN castigar rodillas</li>
       <li>Mejorar resistencia general para sostener entrenos más largos</li>
       <li>Subir peso o repes cada 2 semanas (progresión real)</li>
+      <li>Ser constante 4 días/semana (Lun, Mar, Jue, Vie) con miércoles de descanso</li>
     </ul>
   </div>
 
@@ -479,7 +480,7 @@
         <select id="p_actividad">
           <option value="1.2">Sedentario (oficina, poco ejercicio)</option>
           <option value="1.375">Ligera (1-3 días ejercicio)</option>
-          <option value="1.55" selected>Moderada (4-5 días — TU PLAN)</option>
+          <option value="1.55" selected>Moderada (4 días gym — TU PLAN)</option>
           <option value="1.725">Intensa (6-7 días + activo)</option>
         </select>
       </div>
@@ -616,157 +617,137 @@
     <div class="nota-dia">💡 Si no salen dominadas: jalón al pecho con peso progresivo + dominadas asistidas con banda. En 6-8 semanas saldrán.</div>
   </div>
 
-  <!-- MIÉRCOLES - PIERNA SEGURA -->
+  <!-- MIÉRCOLES - DESCANSO ACTIVO -->
   <div class="dia mie">
     <div class="dia-header">
-      <span>💚 Miércoles — PIERNA (Fuerza, protege rodilla)</span>
-      <span class="focus-badge">FUERZA · 60 min</span>
+      <span>💚 Miércoles — Descanso activo</span>
+      <span class="focus-badge">SUAVE · 30-45 min</span>
     </div>
     <div class="ejercicios">
       <div class="ejercicio">
         <input type="checkbox" id="mie1">
-        <label for="mie1"><strong>Calentamiento extendido rodilla:</strong> 5 min bici + extensiones sin peso + sentadillas vacías</label>
-        <span class="series">8 min</span>
+        <label for="mie1">Caminata suave 30-40 min (NO inclinada)<span class="icono-rodilla">✓ rodillas</span></label>
+        <span class="series">LISS</span>
       </div>
       <div class="ejercicio">
         <input type="checkbox" id="mie2">
-        <label for="mie2"><strong>Hip thrust con barra</strong><span class="icono-fuerza">FUERZA</span><span class="icono-rodilla">✓ rodillas</span></label>
-        <span class="series">4 × 6</span>
+        <label for="mie2">Movilidad de hombros, cadera y rodilla (10-15 min)</label>
+        <span class="series">flex</span>
       </div>
       <div class="ejercicio">
         <input type="checkbox" id="mie3">
-        <label for="mie3"><strong>Peso muerto rumano</strong> (isquios = estabilidad de rodilla)<span class="icono-rodilla">✓ rodillas</span></label>
-        <span class="series">4 × 8</span>
+        <label for="mie3">Foam roller en cuádriceps, isquios y espalda si hay agujetas</label>
+        <span class="series">10 min</span>
+      </div>
+    </div>
+    <div class="nota-dia">💡 Hoy NO entrenas fuerza. Tu sistema nervioso necesita el descanso medio para sostener intensidad el resto de la semana.</div>
+  </div>
+
+  <!-- JUEVES - PIERNA (movido desde miércoles) -->
+  <div class="dia jue">
+    <div class="dia-header">
+      <span>🧡 Jueves — PIERNA (Fuerza, protege rodilla)</span>
+      <span class="focus-badge">FUERZA · 60 min</span>
+    </div>
+    <div class="ejercicios">
+      <div class="ejercicio">
+        <input type="checkbox" id="jue1">
+        <label for="jue1"><strong>Calentamiento extendido rodilla:</strong> 5 min bici + extensiones sin peso + sentadillas vacías</label>
+        <span class="series">8 min</span>
       </div>
       <div class="ejercicio">
-        <input type="checkbox" id="mie4">
-        <label for="mie4">Sentadilla a caja paralela con barra<span class="icono-rodilla">✓ rodillas</span></label>
+        <input type="checkbox" id="jue2">
+        <label for="jue2"><strong>Hip thrust con barra</strong><span class="icono-fuerza">FUERZA</span><span class="icono-rodilla">✓ rodillas</span></label>
         <span class="series">4 × 6</span>
       </div>
       <div class="ejercicio">
-        <input type="checkbox" id="mie5">
-        <label for="mie5">Prensa de pierna rango parcial (no bajar más de 90°)<span class="icono-rodilla">✓ rodillas</span></label>
+        <input type="checkbox" id="jue3">
+        <label for="jue3"><strong>Peso muerto rumano</strong> (isquios = estabilidad de rodilla)<span class="icono-rodilla">✓ rodillas</span></label>
+        <span class="series">4 × 8</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="jue4">
+        <label for="jue4">Sentadilla a caja paralela con barra<span class="icono-rodilla">✓ rodillas</span></label>
+        <span class="series">4 × 6</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="jue5">
+        <label for="jue5">Prensa de pierna rango parcial (no bajar más de 90°)<span class="icono-rodilla">✓ rodillas</span></label>
         <span class="series">3 × 10</span>
       </div>
       <div class="ejercicio">
-        <input type="checkbox" id="mie6">
-        <label for="mie6">Curl femoral acostado o sentado (isquios)</label>
+        <input type="checkbox" id="jue6">
+        <label for="jue6">Curl femoral acostado o sentado (isquios)</label>
         <span class="series">3 × 12</span>
       </div>
       <div class="ejercicio">
-        <input type="checkbox" id="mie7">
-        <label for="mie7">Elevación de talones (gemelos)</label>
+        <input type="checkbox" id="jue7">
+        <label for="jue7">Elevación de talones (gemelos)</label>
         <span class="series">4 × 15</span>
       </div>
       <div class="ejercicio">
-        <input type="checkbox" id="mie8">
-        <label for="mie8">Ab wheel o crunch en polea</label>
+        <input type="checkbox" id="jue8">
+        <label for="jue8">Ab wheel o crunch en polea</label>
         <span class="series">3 × 10</span>
       </div>
     </div>
     <div class="nota-dia">💡 Si una rodilla protesta en cualquier ejercicio: baja peso, sube reps, mete más calentamiento. Mejor 3 buenos meses que 1 semana intensa lesionado.</div>
   </div>
 
-  <!-- JUEVES - HOMBROS + BRAZOS -->
-  <div class="dia jue">
-    <div class="dia-header">
-      <span>🧡 Jueves — HOMBROS + BRAZOS (volumen extra)</span>
-      <span class="focus-badge">VOLUMEN · 55 min</span>
-    </div>
-    <div class="ejercicios">
-      <div class="ejercicio">
-        <input type="checkbox" id="jue1">
-        <label for="jue1">Calentamiento: 5 min movilidad de hombros con banda</label>
-        <span class="series">5 min</span>
-      </div>
-      <div class="ejercicio">
-        <input type="checkbox" id="jue2">
-        <label for="jue2"><strong>Press militar de pie con barra</strong><span class="icono-fuerza">FUERZA</span></label>
-        <span class="series">4 × 6</span>
-      </div>
-      <div class="ejercicio">
-        <input type="checkbox" id="jue3">
-        <label for="jue3">Press hombro con mancuernas sentado</label>
-        <span class="series">3 × 10</span>
-      </div>
-      <div class="ejercicio">
-        <input type="checkbox" id="jue4">
-        <label for="jue4">Elevaciones laterales con mancuernas</label>
-        <span class="series">4 × 12</span>
-      </div>
-      <div class="ejercicio">
-        <input type="checkbox" id="jue5">
-        <label for="jue5"><strong>Curl alternado</strong> con mancuernas (bíceps)</label>
-        <span class="series">4 × 10</span>
-      </div>
-      <div class="ejercicio">
-        <input type="checkbox" id="jue6">
-        <label for="jue6">Curl predicador o concentrado (pico de bíceps)</label>
-        <span class="series">3 × 12</span>
-      </div>
-      <div class="ejercicio">
-        <input type="checkbox" id="jue7">
-        <label for="jue7"><strong>Tríceps en polea con cuerda</strong></label>
-        <span class="series">4 × 12</span>
-      </div>
-      <div class="ejercicio">
-        <input type="checkbox" id="jue8">
-        <label for="jue8">Fondos en banco para tríceps</label>
-        <span class="series">3 × 12</span>
-      </div>
-    </div>
-    <div class="nota-dia">💡 Este es TU día de brazos. Llévalo al fallo en las últimas series. Bombeo a tope = más crecimiento.</div>
-  </div>
-
-  <!-- VIERNES - PECHO + ESPALDA -->
+  <!-- VIERNES - HOMBROS + BRAZOS (movido desde jueves) -->
   <div class="dia vie">
     <div class="dia-header">
-      <span>🩵 Viernes — PECHO + ESPALDA (volumen)</span>
+      <span>🩵 Viernes — HOMBROS + BRAZOS (volumen extra)</span>
       <span class="focus-badge">VOLUMEN · 55 min</span>
     </div>
     <div class="ejercicios">
       <div class="ejercicio">
         <input type="checkbox" id="vie1">
-        <label for="vie1">Calentamiento: 5 min hombros, codos, muñecas</label>
+        <label for="vie1">Calentamiento: 5 min movilidad de hombros con banda</label>
         <span class="series">5 min</span>
       </div>
       <div class="ejercicio">
         <input type="checkbox" id="vie2">
-        <label for="vie2"><strong>Press inclinado con mancuernas</strong></label>
-        <span class="series">4 × 8</span>
+        <label for="vie2"><strong>Press militar de pie con barra</strong><span class="icono-fuerza">FUERZA</span></label>
+        <span class="series">4 × 6</span>
       </div>
       <div class="ejercicio">
         <input type="checkbox" id="vie3">
-        <label for="vie3"><strong>Remo con mancuerna</strong> (cada brazo)</label>
-        <span class="series">4 × 8</span>
-      </div>
-      <div class="ejercicio">
-        <input type="checkbox" id="vie4">
-        <label for="vie4">Push-ups (hasta el fallo)</label>
-        <span class="series">3 × max</span>
-      </div>
-      <div class="ejercicio">
-        <input type="checkbox" id="vie5">
-        <label for="vie5">Jalón al pecho agarre cerrado</label>
+        <label for="vie3">Press hombro con mancuernas sentado</label>
         <span class="series">3 × 10</span>
       </div>
       <div class="ejercicio">
+        <input type="checkbox" id="vie4">
+        <label for="vie4">Elevaciones laterales con mancuernas</label>
+        <span class="series">4 × 12</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="vie5">
+        <label for="vie5"><strong>Curl alternado</strong> con mancuernas (bíceps)</label>
+        <span class="series">4 × 10</span>
+      </div>
+      <div class="ejercicio">
         <input type="checkbox" id="vie6">
-        <label for="vie6">Cruces en polea o pec deck</label>
+        <label for="vie6">Curl predicador o concentrado (pico de bíceps)</label>
         <span class="series">3 × 12</span>
       </div>
       <div class="ejercicio">
         <input type="checkbox" id="vie7">
-        <label for="vie7"><strong>Face pull</strong> con cuerda (hombros + postura)</label>
-        <span class="series">3 × 15</span>
+        <label for="vie7"><strong>Tríceps en polea con cuerda</strong></label>
+        <span class="series">4 × 12</span>
       </div>
       <div class="ejercicio">
         <input type="checkbox" id="vie8">
-        <label for="vie8">Plancha + plancha lateral (cada lado)</label>
-        <span class="series">3 × 40s</span>
+        <label for="vie8">Fondos en banco para tríceps</label>
+        <span class="series">3 × 12</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="vie9">
+        <label for="vie9"><strong>Face pull</strong> con cuerda (protege hombro + postura)</label>
+        <span class="series">3 × 15</span>
       </div>
     </div>
-    <div class="nota-dia">💡 El face pull lo subestiman todos — protege el hombro Y mejora postura (esencial si trabajas en escritorio).</div>
+    <div class="nota-dia">💡 Este es TU día de brazos. Llévalo al fallo en las últimas series. El face pull al final protege hombros — no te lo saltes.</div>
   </div>
 
   <!-- SÁBADO - CARDIO LIGHT OPCIONAL -->
