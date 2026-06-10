@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📊 Registros Semanales — FitHub</title>
+<style>
+  :root {
+    --rosa: #ec4899;
+    --azul: #1e40af;
+    --cyan: #06b6d4;
+    --naranja: #f97316;
+    --verde: #16a34a;
+    --gris: #64748b;
+    --texto: #1f2937;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
+    color: var(--texto);
+    padding: 25px 15px;
+    line-height: 1.5;
+  }
+
+  .contenedor { max-width: 1100px; margin: 0 auto; }
+
+  .nav-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .nav-top a {
+    background: white;
+    color: var(--texto);
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    font-size: 0.9em;
+    font-weight: bold;
+  }
+  .nav-top a:hover { background: #f3f4f6; }
+
+  header {
+    background: linear-gradient(135deg, var(--naranja), #fbbf24);
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    margin-bottom: 25px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(249, 115, 22, 0.3);
+  }
+  header h1 { font-size: 1.9em; margin-bottom: 8px; }
+
+  .seccion-persona {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  }
+
+  .seccion-persona.linda { border-top: 6px solid var(--rosa); }
+  .seccion-persona.alan { border-top: 6px solid var(--azul); }
+
+  .seccion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .seccion-header h2 { font-size: 1.5em; }
+  .linda .seccion-header h2 { color: var(--rosa); }
+  .alan .seccion-header h2 { color: var(--azul); }
+
+  .btn-agregar {
+    background: var(--verde);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.9em;
+    box-shadow: 0 3px 10px rgba(22, 163, 74, 0.3);
+  }
+  .btn-agregar:hover { background: #15803d; }
+
+  .resumen {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+
+  .resumen-item {
+    background: #f9fafb;
+    padding: 12px;
+    border-radius: 12px;
+    text-align: center;
+  }
+  .resumen-item .label {
+    font-size: 0.75em;
+    color: #6b7280;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .resumen-item .valor {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: var(--texto);
+  }
+  .resumen-item .cambio {
+    font-size: 0.85em;
+    margin-top: 4px;
+    font-weight: bold;
+  }
+  .cambio.baja { color: var(--verde); }
+  .cambio.sube { color: var(--rosa); }
+  .cambio.neutral { color: var(--gris); }
+
+  .tabla-contenedor {
+    overflow-x: auto;
+    border-radius: 12px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    font-size: 0.9em;
+  }
+
+  th, td {
+    padding: 10px 8px;
+    text-align: center;
+    border-bottom: 1px solid #f3f4f6;
+  }
+
+  th {
+    background: #f9fafb;
+    font-weight: bold;
+    color: #4b5563;
+    font-size: 0.8em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: sticky;
+    top: 0;
+  }
+
+  .linda thead th { background: #fdf2f8; color: var(--rosa); }
+  .alan thead th { background: #eff6ff; color: var(--azul); }
+
+  tr:hover td { background: #fafafa; }
+
+  .btn-borrar {
+    background: transparent;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 1.1em;
+    padding: 4px 8px;
+  }
+  .btn-borrar:hover { color: #dc2626; }
+
+  .vacio {
+    text-align: center;
+    padding: 40px 20px;
+    color: #9ca3af;
+    font-style: italic;
+  }
+
+  .modal-bg {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-bg.activo { display: flex; }
+
+  .modal {
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modal h3 { margin-bottom: 15px; color: var(--texto); }
+
+  .modal label {
+    display: block;
+    font-size: 0.9em;
+    color: #6b7280;
+    margin-top: 12px;
+    margin-bottom: 4px;
+  }
+
+  .modal input {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 1em;
+  }
+
+  .modal-botones {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .btn-modal {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.95em;
+  }
+  .btn-guardar { background: var(--verde); color: white; }
+  .btn-cancelar { background: #e5e7eb; color: var(--texto); }
+
+  .pr-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+  }
+  .pr-actual {
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
+    padding: 12px;
+    border-radius: 12px;
+  }
+  .pr-actual .label {
+    font-size: 0.75em;
+    color: #991b1b;
+    display: block;
+    margin-bottom: 4px;
+  }
+  .pr-actual input {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    background: white;
+    font-size: 0.95em;
+  }
+
+  .tip {
+    background: linear-gradient(135deg, #ede9fe, #ddd6fe);
+    border-left: 5px solid #7c3aed;
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    font-size: 0.9em;
+    color: #4c1d95;
+  }
+
+  footer {
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.85em;
+    padding: 20px;
+  }
+
+  @media print {
+    .nav-top, .btn-agregar, .btn-borrar { display: none; }
+    body { background: white; }
+  }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <div class="nav-top">
+    <a href="index.html">← Inicio</a>
+    <a href="#" onclick="window.print(); return false;">🖨️ Imprimir</a>
+  </div>
+
+  <header>
+    <h1>📊 Registros Semanales</h1>
+    <p>Tu progreso real, semana a semana</p>
+  </header>
+
+  <div class="tip">
+    💡 <strong>Cómo usar:</strong> Cada lunes en ayunas, mídete y dale clic a "+ Agregar registro". Los datos se guardan en el navegador. El progreso real está en la tendencia, no en una semana suelta.
+  </div>
+
+  <!-- LINDA -->
+  <div class="seccion-persona linda">
+    <div class="seccion-header">
+      <h2>🍑 Linda</h2>
+      <button class="btn-agregar" onclick="abrirModal('linda')">+ Agregar registro</button>
+    </div>
+
+    <div class="resumen" id="resumen-linda">
+      <!-- Llenado por JS -->
+    </div>
+
+    <div class="tabla-contenedor">
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Peso (kg)</th>
+            <th>Cintura (cm)</th>
+            <th>Cadera (cm)</th>
+            <th>Notas</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tabla-linda"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ALAN -->
+  <div class="seccion-persona alan">
+    <div class="seccion-header">
+      <h2>💪 Alan</h2>
+      <button class="btn-agregar" onclick="abrirModal('alan')">+ Agregar registro</button>
+    </div>
+
+    <div class="resumen" id="resumen-alan">
+      <!-- Llenado por JS -->
+    </div>
+
+    <div class="tabla-contenedor">
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Peso (kg)</th>
+            <th>Pecho (cm)</th>
+            <th>Brazo (cm)</th>
+            <th>Muslo (cm)</th>
+            <th>Notas</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="tabla-alan"></tbody>
+      </table>
+    </div>
+
+    <h3 style="color: var(--azul); margin-top: 25px;">🏆 PRs actuales</h3>
+    <p style="font-size: 0.85em; color: #6b7280; margin-top: 5px;">Estos se sincronizan con su rutina semanal. Cada vez que suba un PR, actualícelo aquí o en la rutina — ambos comparten datos.</p>
+    <div class="pr-grid">
+      <div class="pr-actual">
+        <span class="label">🏋️ Press banca</span>
+        <input type="text" data-key="alan_pr_banca" placeholder="60 × 6">
+      </div>
+      <div class="pr-actual">
+        <span class="label">⚡ Peso muerto</span>
+        <input type="text" data-key="alan_pr_pm" placeholder="100 × 5">
+      </div>
+      <div class="pr-actual">
+        <span class="label">💪 Sentadilla caja</span>
+        <input type="text" data-key="alan_pr_sq" placeholder="70 × 6">
+      </div>
+      <div class="pr-actual">
+        <span class="label">🎯 Press militar</span>
+        <input type="text" data-key="alan_pr_pm_mil" placeholder="40 × 6">
+      </div>
+      <div class="pr-actual">
+        <span class="label">🍑 Hip thrust</span>
+        <input type="text" data-key="alan_pr_hip" placeholder="90 × 6">
+      </div>
+      <div class="pr-actual">
+        <span class="label">💪 Curl bíceps</span>
+        <input type="text" data-key="alan_pr_curl" placeholder="25 × 8">
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- MODAL AGREGAR REGISTRO -->
+<div class="modal-bg" id="modal-bg">
+  <div class="modal">
+    <h3 id="modal-titulo">Agregar registro</h3>
+    <label>Fecha</label>
+    <input type="date" id="m_fecha">
+    <label>Peso (kg)</label>
+    <input type="number" step="0.1" id="m_peso" placeholder="65.0">
+
+    <div id="campos-linda">
+      <label>Cintura (cm)</label>
+      <input type="number" step="0.5" id="m_cintura" placeholder="75">
+      <label>Cadera (cm)</label>
+      <input type="number" step="0.5" id="m_cadera" placeholder="98">
+    </div>
+
+    <div id="campos-alan" style="display:none;">
+      <label>Pecho (cm)</label>
+      <input type="number" step="0.5" id="m_pecho" placeholder="105">
+      <label>Brazo contraído (cm)</label>
+      <input type="number" step="0.5" id="m_brazo" placeholder="38">
+      <label>Muslo (cm)</label>
+      <input type="number" step="0.5" id="m_muslo" placeholder="60">
+    </div>
+
+    <label>Notas (opcional)</label>
+    <input type="text" id="m_notas" placeholder="Ej: empecé suplemento de magnesio">
+
+    <div class="modal-botones">
+      <button class="btn-modal btn-cancelar" onclick="cerrarModal()">Cancelar</button>
+      <button class="btn-modal btn-guardar" onclick="guardarRegistro()">Guardar</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  💜 Hecho con cariño · Los datos se guardan en tu navegador (no se sube nada a internet)
+</footer>
+
+<script>
+  let personaActual = null;
+
+  function abrirModal(persona) {
+    personaActual = persona;
+    document.getElementById('modal-titulo').textContent = persona === 'linda' ? '🍑 Agregar registro de Linda' : '💪 Agregar registro de Alan';
+    document.getElementById('campos-linda').style.display = persona === 'linda' ? 'block' : 'none';
+    document.getElementById('campos-alan').style.display = persona === 'alan' ? 'block' : 'none';
+
+    // Fecha por defecto: hoy
+    const hoy = new Date().toISOString().split('T')[0];
+    document.getElementById('m_fecha').value = hoy;
+
+    // Limpiar otros campos
+    ['m_peso','m_cintura','m_cadera','m_pecho','m_brazo','m_muslo','m_notas'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+
+    document.getElementById('modal-bg').classList.add('activo');
+  }
+
+  function cerrarModal() {
+    document.getElementById('modal-bg').classList.remove('activo');
+    personaActual = null;
+  }
+
+  function guardarRegistro() {
+    const fecha = document.getElementById('m_fecha').value;
+    const peso = parseFloat(document.getElementById('m_peso').value);
+
+    if (!fecha || !peso) {
+      alert('Necesitas al menos fecha y peso.');
+      return;
+    }
+
+    const registro = {
+      fecha: fecha,
+      peso: peso,
+      notas: document.getElementById('m_notas').value || ''
+    };
+
+    if (personaActual === 'linda') {
+      registro.cintura = parseFloat(document.getElementById('m_cintura').value) || null;
+      registro.cadera = parseFloat(document.getElementById('m_cadera').value) || null;
+    } else {
+      registro.pecho = parseFloat(document.getElementById('m_pecho').value) || null;
+      registro.brazo = parseFloat(document.getElementById('m_brazo').value) || null;
+      registro.muslo = parseFloat(document.getElementById('m_muslo').value) || null;
+    }
+
+    const key = 'historial_' + personaActual;
+    const historial = JSON.parse(localStorage.getItem(key) || '[]');
+    historial.push(registro);
+    historial.sort((a, b) => a.fecha.localeCompare(b.fecha));
+    localStorage.setItem(key, JSON.stringify(historial));
+
+    // Actualizar también el peso "actual" en la rutina
+    if (personaActual === 'linda') {
+      localStorage.setItem('gym_p_peso', peso);
+      if (registro.cintura) localStorage.setItem('gym_cintura', registro.cintura);
+      if (registro.cadera) localStorage.setItem('gym_cadera', registro.cadera);
+    } else {
+      localStorage.setItem('alan_p_peso', peso);
+      if (registro.pecho) localStorage.setItem('alan_pecho', registro.pecho);
+      if (registro.brazo) localStorage.setItem('alan_brazo', registro.brazo);
+      if (registro.muslo) localStorage.setItem('alan_muslo', registro.muslo);
+    }
+
+    cerrarModal();
+    renderizar();
+  }
+
+  function borrarRegistro(persona, idx) {
+    if (!confirm('¿Borrar este registro?')) return;
+    const key = 'historial_' + persona;
+    const historial = JSON.parse(localStorage.getItem(key) || '[]');
+    historial.splice(idx, 1);
+    localStorage.setItem(key, JSON.stringify(historial));
+    renderizar();
+  }
+
+  function formatearFecha(iso) {
+    const [a, m, d] = iso.split('-');
+    return `${d}/${m}/${a.substring(2)}`;
+  }
+
+  function renderizar() {
+    ['linda', 'alan'].forEach(persona => {
+      const historial = JSON.parse(localStorage.getItem('historial_' + persona) || '[]');
+      const tbody = document.getElementById('tabla-' + persona);
+      const resumen = document.getElementById('resumen-' + persona);
+
+      // Tabla
+      if (historial.length === 0) {
+        const cols = persona === 'linda' ? 6 : 7;
+        tbody.innerHTML = `<tr><td colspan="${cols}" class="vacio">📭 Sin registros aún. Dale clic a "+ Agregar registro" para empezar.</td></tr>`;
+      } else {
+        tbody.innerHTML = historial.map((r, idx) => {
+          if (persona === 'linda') {
+            return `
+              <tr>
+                <td>${formatearFecha(r.fecha)}</td>
+                <td><strong>${r.peso}</strong></td>
+                <td>${r.cintura || '—'}</td>
+                <td>${r.cadera || '—'}</td>
+                <td style="text-align:left; font-size:0.85em; color:#6b7280;">${r.notas || ''}</td>
+                <td><button class="btn-borrar" onclick="borrarRegistro('linda', ${idx})">🗑️</button></td>
+              </tr>
+            `;
+          } else {
+            return `
+              <tr>
+                <td>${formatearFecha(r.fecha)}</td>
+                <td><strong>${r.peso}</strong></td>
+                <td>${r.pecho || '—'}</td>
+                <td>${r.brazo || '—'}</td>
+                <td>${r.muslo || '—'}</td>
+                <td style="text-align:left; font-size:0.85em; color:#6b7280;">${r.notas || ''}</td>
+                <td><button class="btn-borrar" onclick="borrarRegistro('alan', ${idx})">🗑️</button></td>
+              </tr>
+            `;
+          }
+        }).join('');
+      }
+
+      // Resumen
+      if (historial.length === 0) {
+        resumen.innerHTML = '';
+        return;
+      }
+
+      const primero = historial[0];
+      const ultimo = historial[historial.length - 1];
+
+      function bloque(label, ini, fin, unidad, inverso) {
+        // inverso = true significa "bajar es bueno" (peso, cintura). false = subir es bueno
+        if (ini == null || fin == null) {
+          return `<div class="resumen-item"><span class="label">${label}</span><span class="valor">—</span></div>`;
+        }
+        const diff = (fin - ini).toFixed(1);
+        const signo = diff > 0 ? '+' : '';
+        let clase = 'neutral';
+        if (diff != 0) {
+          if (inverso) clase = diff < 0 ? 'baja' : 'sube';
+          else clase = diff > 0 ? 'baja' : 'sube';
+        }
+        const flecha = diff > 0 ? '↑' : diff < 0 ? '↓' : '=';
+        return `<div class="resumen-item">
+          <span class="label">${label}</span>
+          <span class="valor">${fin} ${unidad}</span>
+          <div class="cambio ${clase}">${flecha} ${signo}${diff} ${unidad}</div>
+        </div>`;
+      }
+
+      if (persona === 'linda') {
+        resumen.innerHTML = `
+          ${bloque('Semanas registradas', null, null, '', false).replace('<span class="valor">—</span>', `<span class="valor">${historial.length}</span>`)}
+          ${bloque('Peso actual', primero.peso, ultimo.peso, 'kg', true)}
+          ${bloque('Cintura', primero.cintura, ultimo.cintura, 'cm', true)}
+          ${bloque('Cadera', primero.cadera, ultimo.cadera, 'cm', true)}
+        `;
+      } else {
+        resumen.innerHTML = `
+          ${bloque('Semanas registradas', null, null, '', false).replace('<span class="valor">—</span>', `<span class="valor">${historial.length}</span>`)}
+          ${bloque('Peso actual', primero.peso, ultimo.peso, 'kg', true)}
+          ${bloque('Pecho', primero.pecho, ultimo.pecho, 'cm', false)}
+          ${bloque('Brazo', primero.brazo, ultimo.brazo, 'cm', false)}
+          ${bloque('Muslo', primero.muslo, ultimo.muslo, 'cm', false)}
+        `;
+      }
+    });
+  }
+
+  // PRs Alan: cargar y guardar
+  document.querySelectorAll('.pr-actual input').forEach(inp => {
+    const key = inp.getAttribute('data-key');
+    const saved = localStorage.getItem(key);
+    if (saved) inp.value = saved;
+    inp.addEventListener('change', () => {
+      localStorage.setItem(key, inp.value);
+    });
+  });
+
+  // Cerrar modal con ESC o clic fuera
+  document.getElementById('modal-bg').addEventListener('click', (e) => {
+    if (e.target.id === 'modal-bg') cerrarModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') cerrarModal();
+  });
+
+  renderizar();
+</script>
+</body>
+</html>

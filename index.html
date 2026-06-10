@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitHub — Mi Centro de Entrenamiento</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #fdf4ff 0%, #fce7f3 30%, #dbeafe 70%, #cffafe 100%);
+    min-height: 100vh;
+    color: #1f2937;
+    padding: 30px 20px;
+    line-height: 1.5;
+  }
+
+  .contenedor { max-width: 1100px; margin: 0 auto; }
+
+  header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #ec4899, #a855f7, #3b82f6);
+    color: white;
+    border-radius: 24px;
+    box-shadow: 0 15px 40px rgba(168, 85, 247, 0.3);
+  }
+
+  header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+
+  header p {
+    font-size: 1.1em;
+    opacity: 0.95;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  .card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+  }
+
+  .card.linda::before { background: linear-gradient(90deg, #ec4899, #a855f7); }
+  .card.alan::before { background: linear-gradient(90deg, #1e40af, #06b6d4); }
+  .card.comidas::before { background: linear-gradient(90deg, #16a34a, #22c55e); }
+  .card.registros::before { background: linear-gradient(90deg, #f97316, #fbbf24); }
+
+  .card-icon {
+    font-size: 3em;
+    margin-bottom: 12px;
+  }
+
+  .card h2 {
+    font-size: 1.4em;
+    margin-bottom: 8px;
+  }
+
+  .card.linda h2 { color: #ec4899; }
+  .card.alan h2 { color: #1e40af; }
+  .card.comidas h2 { color: #16a34a; }
+  .card.registros h2 { color: #f97316; }
+
+  .card p {
+    color: #6b7280;
+    font-size: 0.95em;
+    margin-bottom: 15px;
+    flex: 1;
+  }
+
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 15px;
+  }
+
+  .tag {
+    background: #f3f4f6;
+    color: #4b5563;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    font-weight: 500;
+  }
+
+  .card.linda .tag { background: #fce7f3; color: #be185d; }
+  .card.alan .tag { background: #dbeafe; color: #1e40af; }
+  .card.comidas .tag { background: #dcfce7; color: #047857; }
+  .card.registros .tag { background: #fed7aa; color: #c2410c; }
+
+  .card-cta {
+    color: #6b7280;
+    font-weight: bold;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .card:hover .card-cta { color: #1f2937; }
+
+  .quick-stats {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+    margin-bottom: 25px;
+  }
+
+  .quick-stats h2 {
+    color: #6d28d9;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+  }
+
+  .stat {
+    background: #faf5ff;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+  }
+
+  .stat-valor {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #7c3aed;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.8em;
+    color: #6b7280;
+    margin-top: 4px;
+  }
+
+  .empty-stat {
+    color: #cbd5e1;
+    font-style: italic;
+    font-size: 0.85em;
+  }
+
+  .tips-box {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border-radius: 16px;
+    padding: 20px 25px;
+    margin-bottom: 25px;
+    border-left: 6px solid #f97316;
+  }
+
+  .tips-box h3 {
+    color: #c2410c;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+  }
+
+  .tips-box ul {
+    padding-left: 22px;
+    color: #78350f;
+    font-size: 0.92em;
+  }
+
+  .tips-box li { padding: 3px 0; }
+
+  footer {
+    text-align: center;
+    color: #6b7280;
+    font-size: 0.9em;
+    padding: 20px;
+  }
+
+  footer a {
+    color: #7c3aed;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.8em; }
+    .card { padding: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <header>
+    <h1>💪 FitHub</h1>
+    <p>Tu centro de entrenamiento, nutrición y progreso</p>
+  </header>
+
+  <!-- ESTADO RÁPIDO -->
+  <div class="quick-stats">
+    <h2>📊 Vista rápida</h2>
+    <div class="stats-grid" id="stats">
+      <!-- Se llena con JS -->
+    </div>
+  </div>
+
+  <!-- CARDS -->
+  <div class="cards">
+
+    <a href="rutina_semanal.html" class="card linda">
+      <div class="card-icon">🍑</div>
+      <h2>Rutina de Linda</h2>
+      <p>Plan semanal de fuerza con foco en glúteos y abdomen. Déficit agresivo para bajar grasa más rápido.</p>
+      <div class="card-tags">
+        <span class="tag">4 días/semana</span>
+        <span class="tag">Glúteos</span>
+        <span class="tag">Pérdida grasa</span>
+      </div>
+      <div class="card-cta">Abrir rutina →</div>
+    </a>
+
+    <a href="rutina_alan.html" class="card alan">
+      <div class="card-icon">💪</div>
+      <h2>Rutina de Alan</h2>
+      <p>Plan enfocado en ganar fuerza en pecho, brazos y pierna. Cuidando rodillas con técnica controlada.</p>
+      <div class="card-tags">
+        <span class="tag">5 días/semana</span>
+        <span class="tag">Fuerza</span>
+        <span class="tag">PRs</span>
+      </div>
+      <div class="card-cta">Abrir rutina →</div>
+    </a>
+
+    <a href="plan_comidas.html" class="card comidas">
+      <div class="card-icon">🥗</div>
+      <h2>Plan de Comidas</h2>
+      <p>Comidas antiinflamatorias para los 2, con macros calculados a sus metas reales. Sin perder carbohidratos.</p>
+      <div class="card-tags">
+        <span class="tag">17 comidas</span>
+        <span class="tag">Antiinflamatorio</span>
+        <span class="tag">Con carbs</span>
+      </div>
+      <div class="card-cta">Ver plan de comidas →</div>
+    </a>
+
+    <a href="registros.html" class="card registros">
+      <div class="card-icon">📊</div>
+      <h2>Registros Semanales</h2>
+      <p>Historial de peso, medidas y PRs semana a semana. Veo el progreso real, no lo que dice el espejo.</p>
+      <div class="card-tags">
+        <span class="tag">Historial</span>
+        <span class="tag">Tendencias</span>
+        <span class="tag">PRs Alan</span>
+      </div>
+      <div class="card-cta">Ver progreso →</div>
+    </a>
+
+  </div>
+
+  <!-- TIPS -->
+  <div class="tips-box">
+    <h3>🌟 Para arrancar</h3>
+    <ul>
+      <li>1. Cada uno entra a su <strong>rutina</strong> y llena su perfil (peso, altura, edad, actividad)</li>
+      <li>2. Abren el <strong>plan de comidas</strong> y le dan a "🔄 Sincronizar" para cargar los datos</li>
+      <li>3. Cada lunes en ayunas: registran peso en <strong>Registros Semanales</strong> y miden cintura</li>
+      <li>4. Pueden <strong>editar ejercicios</strong> de cada día con el botón "✏️ Editar" si quieren cambiar alguno</li>
+      <li>5. Imprimen sus rutinas con Ctrl+P para llevar al gym sin pantalla</li>
+    </ul>
+  </div>
+
+  <footer>
+    💜 Hecho con cariño por Linda · <span id="fecha-hoy"></span>
+  </footer>
+
+</div>
+
+<script>
+  // Fecha de hoy en footer
+  const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  const hoy = new Date();
+  document.getElementById('fecha-hoy').textContent = hoy.getDate() + ' de ' + meses[hoy.getMonth()] + ' ' + hoy.getFullYear();
+
+  // Cargar stats rápidas
+  function cargarStats() {
+    const lindaPeso = localStorage.getItem('gym_p_peso');
+    const alanPeso = localStorage.getItem('alan_p_peso');
+    const lindaCintura = localStorage.getItem('gym_cintura');
+    const alanCintura = localStorage.getItem('alan_cintura') || localStorage.getItem('alan_pecho');
+
+    const stats = document.getElementById('stats');
+    stats.innerHTML = `
+      <div class="stat">
+        <span class="stat-valor">${lindaPeso ? lindaPeso + ' kg' : '<span class="empty-stat">—</span>'}</span>
+        <div class="stat-label">🍑 Peso Linda</div>
+      </div>
+      <div class="stat">
+        <span class="stat-valor">${alanPeso ? alanPeso + ' kg' : '<span class="empty-stat">—</span>'}</span>
+        <div class="stat-label">💪 Peso Alan</div>
+      </div>
+      <div class="stat">
+        <span class="stat-valor">${lindaCintura ? lindaCintura + ' cm' : '<span class="empty-stat">—</span>'}</span>
+        <div class="stat-label">📏 Cintura Linda</div>
+      </div>
+      <div class="stat">
+        <span class="stat-valor">${alanCintura ? alanCintura + ' cm' : '<span class="empty-stat">—</span>'}</span>
+        <div class="stat-label">📏 Pecho Alan</div>
+      </div>
+    `;
+  }
+  cargarStats();
+</script>
+</body>
+</html>

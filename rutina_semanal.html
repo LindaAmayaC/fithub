@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Mi Rutina Semanal — Glúteos, Abs & Fuerza | Linda</title>
+<style>
+  :root {
+    --rosa: #ec4899;
+    --rosa-claro: #fbcfe8;
+    --morado: #a855f7;
+    --azul: #3b82f6;
+    --verde: #10b981;
+    --amarillo: #fbbf24;
+    --naranja: #f97316;
+    --rojo: #ef4444;
+    --fondo: #fff1f5;
+    --texto: #1f2937;
+    --card: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #fff1f5 0%, #fce7f3 50%, #f3e8ff 100%);
+    color: var(--texto);
+    padding: 30px 20px;
+    line-height: 1.5;
+  }
+
+  .contenedor { max-width: 1100px; margin: 0 auto; }
+
+  header {
+    background: linear-gradient(135deg, var(--rosa), var(--morado));
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3);
+    text-align: center;
+  }
+
+  header h1 { font-size: 1.9em; margin-bottom: 8px; }
+  header p { font-size: 1em; opacity: 0.95; }
+
+  .objetivos {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    border-left: 6px solid var(--rosa);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  }
+
+  .objetivos h2 { color: var(--rosa); margin-bottom: 10px; font-size: 1.2em; }
+  .objetivos ul { list-style: none; padding-left: 0; }
+  .objetivos li { padding: 4px 0; padding-left: 28px; position: relative; }
+  .objetivos li::before { content: "🍑"; position: absolute; left: 0; }
+
+  .nutricion {
+    background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+    border-radius: 16px;
+    padding: 20px 25px;
+    margin-bottom: 25px;
+    border-left: 6px solid var(--verde);
+  }
+
+  .nutricion h2 { color: #047857; margin-bottom: 10px; font-size: 1.2em; }
+  .nutricion-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+  }
+  .nutricion-item {
+    background: white;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 0.9em;
+  }
+  .nutricion-item strong { color: var(--verde); }
+
+  .dia {
+    background: var(--card);
+    border-radius: 18px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    page-break-inside: avoid;
+  }
+
+  .dia-header {
+    padding: 18px 25px;
+    color: white;
+    font-size: 1.1em;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .lun .dia-header { background: linear-gradient(90deg, var(--rosa), #f472b6); }
+  .mar .dia-header { background: linear-gradient(90deg, var(--azul), #60a5fa); }
+  .mie .dia-header { background: linear-gradient(90deg, var(--amarillo), #fcd34d); color: #78350f; }
+  .jue .dia-header { background: linear-gradient(90deg, var(--morado), #c084fc); }
+  .vie .dia-header { background: linear-gradient(90deg, #06b6d4, #67e8f9); }
+  .sab .dia-header { background: linear-gradient(90deg, var(--naranja), #fb923c); }
+  .dom .dia-header { background: linear-gradient(90deg, #94a3b8, #cbd5e1); color: #1e293b; }
+
+  .focus-badge {
+    background: rgba(255,255,255,0.25);
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    font-weight: bold;
+  }
+
+  .ejercicios { padding: 15px 20px; }
+
+  .ejercicio {
+    display: grid;
+    grid-template-columns: 30px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+    background: #fafafa;
+    transition: background 0.2s;
+  }
+
+  .ejercicio:hover { background: #fdf2f8; }
+
+  .ejercicio input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--rosa);
+    cursor: pointer;
+  }
+
+  .ejercicio label { cursor: pointer; font-size: 0.95em; }
+  .ejercicio input:checked + label {
+    text-decoration: line-through;
+    opacity: 0.5;
+  }
+
+  .series {
+    background: var(--rosa);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-size: 0.8em;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+  .lun .series { background: var(--rosa); }
+  .mar .series { background: var(--azul); }
+  .jue .series { background: var(--morado); }
+  .vie .series { background: #06b6d4; }
+
+  .nota-dia {
+    padding: 0 20px 15px;
+    font-size: 0.85em;
+    color: #6b7280;
+    font-style: italic;
+  }
+
+  .descanso-msg {
+    padding: 20px;
+    text-align: center;
+    font-size: 1em;
+    color: #78350f;
+  }
+
+  .progreso {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+  }
+
+  .progreso h2 { color: var(--rosa); margin-bottom: 10px; }
+
+  .progreso-barra {
+    height: 30px;
+    background: #f3f4f6;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-top: 15px;
+    position: relative;
+  }
+
+  .progreso-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--rosa), var(--morado));
+    width: 0%;
+    transition: width 0.5s ease;
+    border-radius: 15px;
+  }
+
+  .progreso-texto {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    color: var(--texto);
+    z-index: 2;
+  }
+
+  .resetear {
+    margin-top: 15px;
+    padding: 8px 20px;
+    background: var(--rosa);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9em;
+  }
+  .resetear:hover { background: var(--morado); }
+
+  .tips {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border-radius: 16px;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    border-left: 6px solid var(--naranja);
+  }
+  .tips h2 { color: var(--naranja); margin-bottom: 10px; font-size: 1.2em; }
+  .tips ol { padding-left: 25px; }
+  .tips li { padding: 5px 0; }
+
+  .registro-peso, .perfil {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  }
+  .registro-peso h2, .perfil h2 { color: var(--morado); margin-bottom: 10px; }
+  .registro-peso input, .perfil input, .perfil select {
+    padding: 8px 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 0.95em;
+    margin: 5px;
+    width: 110px;
+    background: white;
+  }
+  .perfil select { width: 200px; }
+  .registro-peso label, .perfil label {
+    font-size: 0.9em;
+    color: #6b7280;
+    display: inline-block;
+    margin-right: 10px;
+  }
+  .perfil-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .perfil-grid > div { display: flex; flex-direction: column; gap: 4px; }
+
+  .calculo {
+    color: var(--rosa);
+    font-weight: bold;
+    font-size: 1.1em;
+  }
+  .calculo-grande {
+    color: var(--morado);
+    font-weight: bold;
+    font-size: 1.3em;
+  }
+  .aviso-perfil {
+    background: #fef3c7;
+    border-left: 4px solid var(--amarillo);
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #78350f;
+  }
+
+  .disclaimer {
+    background: #fee2e2;
+    border-left: 6px solid var(--rojo);
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    font-size: 0.85em;
+    color: #7f1d1d;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 30px;
+    color: #6b7280;
+    font-size: 0.9em;
+  }
+
+  @media print {
+    body { background: white; padding: 10px; }
+    .resetear, .progreso { display: none; }
+    .dia { box-shadow: none; border: 1px solid #ddd; }
+    .dia-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  @media (max-width: 700px) {
+    .ejercicio { grid-template-columns: 25px 1fr; }
+    .series { grid-column: 2; justify-self: start; margin-top: 4px; }
+  }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+    <a href="index.html" style="background: white; color: var(--texto); text-decoration: none; padding: 8px 16px; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); font-size: 0.9em; font-weight: bold;">← Inicio</a>
+    <button onclick="toggleEditMode()" id="edit-btn" style="background: var(--morado); color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 0.9em;">✏️ Editar ejercicios</button>
+  </div>
+
+  <header>
+    <h1>🍑 Mi Rutina Semanal de Fuerza</h1>
+    <p>Glúteos · Abdomen · Bajar grasa más rápido · Linda</p>
+  </header>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer">
+    ⚠️ <strong>Importante:</strong> Esta rutina es una guía general. Si nunca has hecho hip thrust o peso muerto con barra, pide a un coach que revise tu técnica al menos las primeras 2 semanas — es la diferencia entre crecer y lesionarte. Empieza con pesos cómodos y sube progresivamente.
+  </div>
+
+  <!-- PROGRESO -->
+  <div class="progreso">
+    <h2>📊 Progreso de la semana</h2>
+    <div class="progreso-barra">
+      <div class="progreso-fill" id="barra"></div>
+      <div class="progreso-texto" id="texto-progreso">0 / 0 ejercicios</div>
+    </div>
+    <button class="resetear" onclick="resetear()">🔄 Empezar semana nueva</button>
+  </div>
+
+  <!-- OBJETIVOS -->
+  <div class="objetivos">
+    <h2>🎯 Mis objetivos</h2>
+    <ul>
+      <li>Bajar grasa rápido SIN perder músculo del glúteo</li>
+      <li>Fuerza progresiva — subir peso/repes cada 2 semanas</li>
+      <li>Abdomen marcado y core fuerte</li>
+      <li>Alcanzar 10.000 pasos diarios fuera del gym</li>
+      <li>Ser constante 4 días/semana sin frustrarme</li>
+    </ul>
+  </div>
+
+  <!-- MI PERFIL -->
+  <div class="perfil">
+    <h2>👤 Mi perfil (calcula mis metas)</h2>
+    <p style="font-size: 0.9em; color: #6b7280; margin-bottom: 5px;">
+      Llena estos datos UNA vez. Cada semana solo actualizas tu peso y todos los números de abajo se recalculan solos.
+    </p>
+    <div class="perfil-grid">
+      <div>
+        <label for="p_peso">Peso actual (kg)</label>
+        <input type="number" step="0.1" id="p_peso" placeholder="65">
+      </div>
+      <div>
+        <label for="p_altura">Altura (cm)</label>
+        <input type="number" step="1" id="p_altura" placeholder="165">
+      </div>
+      <div>
+        <label for="p_edad">Edad</label>
+        <input type="number" step="1" id="p_edad" placeholder="30">
+      </div>
+      <div>
+        <label for="p_actividad">Nivel de actividad</label>
+        <select id="p_actividad">
+          <option value="1.2">Sedentaria (oficina, poco ejercicio)</option>
+          <option value="1.375">Ligera (1-3 días ejercicio)</option>
+          <option value="1.55" selected>Moderada (4-5 días — TU PLAN)</option>
+          <option value="1.725">Intensa (6-7 días + activa)</option>
+        </select>
+      </div>
+    </div>
+    <div class="aviso-perfil" id="aviso-perfil">
+      ✏️ Llena tus datos arriba para que se calculen tus calorías y proteína personalizadas.
+    </div>
+  </div>
+
+  <!-- NUTRICIÓN -->
+  <div class="nutricion">
+    <h2>🥗 Las 6 reglas para BAJAR GRASA sin perder músculo — TUS números</h2>
+    <div class="nutricion-grid">
+      <div class="nutricion-item">
+        <strong>1. Proteína MUY alta</strong><br>
+        Tu meta: <span class="calculo" id="r_proteina">— g/día</span><br>
+        <small>(1.8–2.2g por kg — alta para no perder glúteo en déficit)</small>
+      </div>
+      <div class="nutricion-item">
+        <strong>2. Déficit para bajar rápido</strong><br>
+        Mantenimiento: <span class="calculo" id="r_mantenimiento">— kcal</span><br>
+        🎯 Tu objetivo: <span class="calculo-grande" id="r_deficit">— kcal/día</span><br>
+        <small>Rango: <span id="r_rango">— a —</span> kcal</small>
+      </div>
+      <div class="nutricion-item">
+        <strong>3. Agua</strong><br>
+        Tu meta: <span class="calculo" id="r_agua">— L/día</span><br>
+        <small>(~35 ml por kg de peso)</small>
+      </div>
+      <div class="nutricion-item">
+        <strong>4. 10.000 pasos diarios</strong><br>
+        Es el truco secreto. Quema 300-400 kcal extra sin tocar la fuerza.
+      </div>
+      <div class="nutricion-item">
+        <strong>5. Dormir 7-8h</strong><br>
+        Mal sueño = cortisol alto = grasa abdominal + antojos. No negociable.
+      </div>
+      <div class="nutricion-item">
+        <strong>6. Carbos solo en torno al entreno</strong><br>
+        Desayuno y post-entreno = SÍ carbos. Cenas = más proteína y verde.
+      </div>
+    </div>
+  </div>
+
+  <!-- LUNES - GLÚTEOS PESADO -->
+  <div class="dia lun">
+    <div class="dia-header">
+      <span>🌸 Lunes — Glúteos FUERZA</span>
+      <span class="focus-badge">PESADO · 60-75 min</span>
+    </div>
+    <div class="ejercicios">
+      <div class="ejercicio">
+        <input type="checkbox" id="lun1">
+        <label for="lun1">Calentamiento: 5 min bici/caminadora + activación de glúteo (banda)</label>
+        <span class="series">5 min</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="lun2">
+        <label for="lun2"><strong>Hip thrust con barra</strong> — el rey del glúteo</label>
+        <span class="series">4 × 6-8</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="lun3">
+        <label for="lun3"><strong>Peso muerto rumano</strong> (mancuerna o barra)</label>
+        <span class="series">4 × 8</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="lun4">
+        <label for="lun4">Sentadilla búlgara (cada pierna)</label>
+        <span class="series">3 × 10</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="lun5">
+        <label for="lun5">Hip abduction en máquina</label>
+        <span class="series">4 × 12</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="lun6">
+        <label for="lun6">Plancha abdominal</label>
+        <span class="series">3 × 45s</span>
+      </div>
+    </div>
+    <div class="nota-dia">💡 Descanso entre series pesadas: 90s. Entre series ligeras: 45-60s.</div>
+  </div>
+
+  <!-- MARTES - TREN SUPERIOR + CORE -->
+  <div class="dia mar">
+    <div class="dia-header">
+      <span>💙 Martes — Tren Superior + Core</span>
+      <span class="focus-badge">FUERZA · 50-60 min</span>
+    </div>
+    <div class="ejercicios">
+      <div class="ejercicio">
+        <input type="checkbox" id="mar1">
+        <label for="mar1">Calentamiento: 5 min movilidad de hombros y espalda</label>
+        <span class="series">5 min</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mar2">
+        <label for="mar2"><strong>Remo con mancuerna</strong> (cada brazo)</label>
+        <span class="series">4 × 8</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mar3">
+        <label for="mar3">Press hombro con mancuernas</label>
+        <span class="series">3 × 10</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mar4">
+        <label for="mar4">Jalón al pecho en polea</label>
+        <span class="series">3 × 10</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mar5">
+        <label for="mar5">Curl bíceps con mancuernas</label>
+        <span class="series">3 × 12</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mar6">
+        <label for="mar6">Dead bug (cada lado)</label>
+        <span class="series">3 × 12</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mar7">
+        <label for="mar7">Russian twist con peso</label>
+        <span class="series">3 × 20</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MIÉRCOLES - DESCANSO ACTIVO -->
+  <div class="dia mie">
+    <div class="dia-header">
+      <span>💛 Miércoles — Descanso activo</span>
+      <span class="focus-badge">SUAVE · 30-45 min</span>
+    </div>
+    <div class="ejercicios">
+      <div class="ejercicio">
+        <input type="checkbox" id="mie1">
+        <label for="mie1">Caminata inclinada o al aire libre (30-45 min)</label>
+        <span class="series">LISS</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mie2">
+        <label for="mie2">Estiramientos / yoga suave (15 min)</label>
+        <span class="series">flex</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mie3">
+        <label for="mie3">Foam roller en glúteos e isquios si hay agujetas</label>
+        <span class="series">10 min</span>
+      </div>
+    </div>
+    <div class="nota-dia">💡 Hoy NO entrenas fuerza. Recupera, hidrata, duerme bien.</div>
+  </div>
+
+  <!-- JUEVES - GLÚTEOS VOLUMEN -->
+  <div class="dia jue">
+    <div class="dia-header">
+      <span>💜 Jueves — Glúteos VOLUMEN</span>
+      <span class="focus-badge">MODERADO · 60 min</span>
+    </div>
+    <div class="ejercicios">
+      <div class="ejercicio">
+        <input type="checkbox" id="jue1">
+        <label for="jue1">Calentamiento + activación con banda</label>
+        <span class="series">5 min</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="jue2">
+        <label for="jue2"><strong>Sentadilla sumo</strong> con mancuerna o barra</label>
+        <span class="series">4 × 10</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="jue3">
+        <label for="jue3">Patada de glúteo en polea (cada lado)</label>
+        <span class="series">4 × 12</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="jue4">
+        <label for="jue4">Puente de glúteo a una pierna</label>
+        <span class="series">3 × 12</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="jue5">
+        <label for="jue5">Step up con mancuernas (cada pierna)</label>
+        <span class="series">3 × 10</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="jue6">
+        <label for="jue6">Crunch en máquina o con polea</label>
+        <span class="series">4 × 15</span>
+      </div>
+    </div>
+    <div class="nota-dia">💡 Hoy el peso baja un poco, pero las repes suben. Aprieta el glúteo arriba en cada repetición.</div>
+  </div>
+
+  <!-- VIERNES - TREN SUPERIOR + CORE -->
+  <div class="dia vie">
+    <div class="dia-header">
+      <span>💎 Viernes — Tren Superior + Core</span>
+      <span class="focus-badge">FUERZA · 50-60 min</span>
+    </div>
+    <div class="ejercicios">
+      <div class="ejercicio">
+        <input type="checkbox" id="vie1">
+        <label for="vie1">Calentamiento de hombros y muñecas</label>
+        <span class="series">5 min</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="vie2">
+        <label for="vie2"><strong>Press pecho</strong> con mancuernas (banco plano)</label>
+        <span class="series">4 × 8</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="vie3">
+        <label for="vie3">Remo en T o con barra</label>
+        <span class="series">4 × 10</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="vie4">
+        <label for="vie4">Elevación lateral con mancuernas</label>
+        <span class="series">3 × 12</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="vie5">
+        <label for="vie5">Tríceps en polea (extensión)</label>
+        <span class="series">3 × 12</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="vie6">
+        <label for="vie6">Plancha lateral (cada lado)</label>
+        <span class="series">3 × 30s</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="vie7">
+        <label for="vie7">Elevación de piernas colgada o tumbada</label>
+        <span class="series">3 × 12</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SÁBADO - CARDIO OPCIONAL -->
+  <div class="dia sab">
+    <div class="dia-header">
+      <span>🧡 Sábado — Cardio opcional / Movilidad</span>
+      <span class="focus-badge">OPCIONAL · 30-45 min</span>
+    </div>
+    <div class="ejercicios">
+      <div class="ejercicio">
+        <input type="checkbox" id="sab1">
+        <label for="sab1">Caminata inclinada (cinta al 10% inclinación, 45 min) <strong>O</strong></label>
+        <span class="series">LISS</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="sab2">
+        <label for="sab2">Bicicleta suave 30 min <strong>O</strong></label>
+        <span class="series">LISS</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="sab3">
+        <label for="sab3">Clase de yoga / pilates (recomendado para core)</label>
+        <span class="series">flex</span>
+      </div>
+    </div>
+    <div class="nota-dia">💡 Si tuviste una semana intensa, mejor descansa total. La recuperación ES parte del entrenamiento.</div>
+  </div>
+
+  <!-- DOMINGO - DESCANSO -->
+  <div class="dia dom">
+    <div class="dia-header">
+      <span>🤍 Domingo — Descanso total</span>
+      <span class="focus-badge">RECUPERACIÓN</span>
+    </div>
+    <div class="descanso-msg">
+      🛋️ Hoy descansas, duermes bien, hidratas y comes proteína.<br>
+      <strong>Tu glúteo crece cuando descansas, no cuando entrenas.</strong>
+    </div>
+  </div>
+
+  <!-- REGISTRO -->
+  <div class="registro-peso">
+    <h2>📏 Medidas semanales (opcional pero útil)</h2>
+    <p style="font-size: 0.85em; color: #6b7280; margin-bottom: 10px;">Mídete el mismo día cada semana (ej: lunes en ayunas). El número de la balanza puede engañar — la cintura y cadera no mienten. Tu peso lo actualizas arriba en "Mi perfil".</p>
+    <div>
+      <label>Cintura (cm): <input type="number" step="0.5" id="cintura"></label>
+      <label>Cadera (cm): <input type="number" step="0.5" id="cadera"></label>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="tips">
+    <h2>✨ Tips de oro para bajar más rápido</h2>
+    <ol>
+      <li><strong>10.000 pasos diarios = arma secreta.</strong> Quema 300-400 kcal extras sin tocar fuerza. Camina al hablar por teléfono, baja del bus 2 paradas antes.</li>
+      <li><strong>Proteína en CADA comida (30-40g).</strong> Mantiene el glúteo intacto en déficit y baja antojos.</li>
+      <li><strong>Pesa los alimentos las primeras 2 semanas.</strong> Es la diferencia entre creer que estás en déficit y estarlo de verdad.</li>
+      <li><strong>El glúteo crece con peso + tiempo bajo tensión.</strong> En déficit cuesta más subir peso — está bien, prioriza no perderlo.</li>
+      <li><strong>Activa el glúteo antes de entrenar.</strong> Banda, monster walks, puentes. 5 min hacen la diferencia.</li>
+      <li><strong>La balanza fluctúa 1-2 kg al día por agua.</strong> Pésate solo lunes en ayunas. Mide cintura/cadera semanal.</li>
+      <li><strong>Si te sientes muy hambrienta 3 días seguidos:</strong> sube 100-200 kcal. El déficit sostenible &gt; déficit perfecto.</li>
+      <li><strong>Si un día no puedes ir al gym:</strong> camina 1 hora extra. El déficit calórico es lo que más manda.</li>
+    </ol>
+  </div>
+
+  <footer>
+    💪🍑 Hecho para Linda · Constancia &gt; Perfección · Imprime con Ctrl+P
+  </footer>
+
+</div>
+
+<script>
+  const checks = document.querySelectorAll('input[type="checkbox"]');
+  const total = checks.length;
+
+  function actualizarProgreso() {
+    const completadas = document.querySelectorAll('input[type="checkbox"]:checked').length;
+    const porcentaje = total > 0 ? (completadas / total) * 100 : 0;
+    document.getElementById('barra').style.width = porcentaje + '%';
+    document.getElementById('texto-progreso').textContent =
+      completadas + ' / ' + total + ' ejercicios (' + Math.round(porcentaje) + '%)';
+  }
+
+  checks.forEach(check => {
+    const guardado = localStorage.getItem('gym_' + check.id);
+    if (guardado === 'true') check.checked = true;
+
+    check.addEventListener('change', () => {
+      localStorage.setItem('gym_' + check.id, check.checked);
+      actualizarProgreso();
+    });
+  });
+
+  // Guardar medidas
+  ['cintura', 'cadera'].forEach(id => {
+    const input = document.getElementById(id);
+    const guardado = localStorage.getItem('gym_' + id);
+    if (guardado) input.value = guardado;
+    input.addEventListener('change', () => {
+      localStorage.setItem('gym_' + id, input.value);
+    });
+  });
+
+  // ===== PERFIL + CÁLCULOS NUTRICIONALES =====
+  const perfilIds = ['p_peso', 'p_altura', 'p_edad', 'p_actividad'];
+
+  function calcularNutricion() {
+    const peso = parseFloat(document.getElementById('p_peso').value);
+    const altura = parseFloat(document.getElementById('p_altura').value);
+    const edad = parseFloat(document.getElementById('p_edad').value);
+    const actividad = parseFloat(document.getElementById('p_actividad').value);
+
+    const aviso = document.getElementById('aviso-perfil');
+
+    if (!peso || !altura || !edad) {
+      // No hay datos completos
+      document.getElementById('r_proteina').textContent = '— g/día';
+      document.getElementById('r_mantenimiento').textContent = '— kcal';
+      document.getElementById('r_deficit').textContent = '— kcal/día';
+      document.getElementById('r_rango').textContent = '— a —';
+      document.getElementById('r_agua').textContent = '— L/día';
+      aviso.innerHTML = '✏️ Llena tus datos arriba para que se calculen tus calorías y proteína personalizadas.';
+      aviso.style.background = '#fef3c7';
+      aviso.style.borderLeftColor = 'var(--amarillo)';
+      aviso.style.color = '#78350f';
+      return;
+    }
+
+    // Fórmula Mifflin-St Jeor (mujer)
+    const bmr = (10 * peso) + (6.25 * altura) - (5 * edad) - 161;
+    const tdee = bmr * actividad;
+
+    // Déficit más agresivo: -550 kcal objetivo (rango -700 a -400)
+    const deficitObjetivo = Math.round(tdee - 550);
+    const deficitMin = Math.round(tdee - 700);
+    const deficitMax = Math.round(tdee - 400);
+
+    // Proteína MÁS alta para preservar músculo en déficit agresivo
+    const proteinaMin = Math.round(peso * 1.8);
+    const proteinaMax = Math.round(peso * 2.2);
+
+    // Agua
+    const aguaL = (peso * 35 / 1000).toFixed(1);
+
+    document.getElementById('r_proteina').textContent = proteinaMin + '–' + proteinaMax + ' g/día';
+    document.getElementById('r_mantenimiento').textContent = Math.round(tdee) + ' kcal';
+    document.getElementById('r_deficit').textContent = deficitObjetivo + ' kcal/día';
+    document.getElementById('r_rango').textContent = deficitMin + ' a ' + deficitMax;
+    document.getElementById('r_agua').textContent = aguaL + ' L/día';
+
+    aviso.innerHTML = '✅ <strong>¡Listo!</strong> Tu objetivo es <strong>déficit agresivo</strong> para bajar más rápido. Si te sientes con hambre extrema o sin energía, sube a –400 kcal. Cuando bajes de peso, actualiza el peso arriba.';
+    aviso.style.background = '#dcfce7';
+    aviso.style.borderLeftColor = 'var(--verde)';
+    aviso.style.color = '#047857';
+  }
+
+  perfilIds.forEach(id => {
+    const el = document.getElementById(id);
+    const guardado = localStorage.getItem('gym_' + id);
+    if (guardado) el.value = guardado;
+    el.addEventListener('input', () => {
+      localStorage.setItem('gym_' + id, el.value);
+      calcularNutricion();
+    });
+    el.addEventListener('change', () => {
+      localStorage.setItem('gym_' + id, el.value);
+      calcularNutricion();
+    });
+  });
+
+  calcularNutricion();
+
+  actualizarProgreso();
+
+  function resetear() {
+    if (confirm('¿Empezar una semana nueva? Se desmarcarán todos los ejercicios.')) {
+      checks.forEach(check => {
+        check.checked = false;
+        localStorage.removeItem('gym_' + check.id);
+      });
+      actualizarProgreso();
+    }
+  }
+
+  // ===== MODO EDICIÓN DE EJERCICIOS =====
+  let editMode = false;
+
+  function toggleEditMode() {
+    editMode = !editMode;
+    const labels = document.querySelectorAll('.ejercicio label');
+    const btn = document.getElementById('edit-btn');
+
+    labels.forEach(label => {
+      label.contentEditable = editMode;
+      if (editMode) {
+        label.style.background = '#fef3c7';
+        label.style.padding = '4px 8px';
+        label.style.borderRadius = '6px';
+        label.style.outline = '1px dashed #f59e0b';
+      } else {
+        label.style.background = '';
+        label.style.padding = '';
+        label.style.outline = '';
+        // Guardar cambios
+        const forId = label.getAttribute('for');
+        if (forId) {
+          localStorage.setItem('gym_edit_' + forId, label.innerHTML);
+        }
+      }
+    });
+
+    if (editMode) {
+      btn.textContent = '💾 Guardar cambios';
+      btn.style.background = '#16a34a';
+    } else {
+      btn.textContent = '✏️ Editar ejercicios';
+      btn.style.background = 'var(--morado)';
+    }
+  }
+
+  // Cargar ediciones guardadas al iniciar
+  document.querySelectorAll('.ejercicio label').forEach(label => {
+    const forId = label.getAttribute('for');
+    if (forId) {
+      const saved = localStorage.getItem('gym_edit_' + forId);
+      if (saved) label.innerHTML = saved;
+    }
+  });
+</script>
+</body>
+</html>

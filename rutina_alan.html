@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Rutina Semanal — Alan | Fuerza Tren Superior + Pierna</title>
+<style>
+  :root {
+    --azul: #1e40af;
+    --azul-claro: #3b82f6;
+    --cyan: #06b6d4;
+    --verde: #10b981;
+    --naranja: #f97316;
+    --amarillo: #fbbf24;
+    --rojo: #ef4444;
+    --gris: #64748b;
+    --fondo: #eff6ff;
+    --texto: #1f2937;
+    --card: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #cffafe 100%);
+    color: var(--texto);
+    padding: 30px 20px;
+    line-height: 1.5;
+  }
+
+  .contenedor { max-width: 1100px; margin: 0 auto; }
+
+  header {
+    background: linear-gradient(135deg, var(--azul), var(--cyan));
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 30px rgba(30, 64, 175, 0.3);
+    text-align: center;
+  }
+
+  header h1 { font-size: 1.9em; margin-bottom: 8px; }
+  header p { font-size: 1em; opacity: 0.95; }
+
+  .disclaimer {
+    background: #fee2e2;
+    border-left: 6px solid var(--rojo);
+    border-radius: 12px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    font-size: 0.9em;
+    color: #7f1d1d;
+  }
+
+  .alerta-rodillas {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border-left: 6px solid var(--naranja);
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-bottom: 25px;
+    color: #78350f;
+  }
+  .alerta-rodillas h3 { margin-bottom: 8px; }
+  .alerta-rodillas ul { padding-left: 20px; margin-top: 8px; }
+  .alerta-rodillas li { padding: 3px 0; }
+
+  .progreso {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+  }
+
+  .progreso h2 { color: var(--azul); margin-bottom: 10px; }
+
+  .progreso-barra {
+    height: 30px;
+    background: #f3f4f6;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-top: 15px;
+    position: relative;
+  }
+
+  .progreso-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--azul), var(--cyan), var(--verde));
+    width: 0%;
+    transition: width 0.5s ease;
+    border-radius: 15px;
+  }
+
+  .progreso-texto {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    color: var(--texto);
+    z-index: 2;
+  }
+
+  .resetear {
+    margin-top: 15px;
+    padding: 8px 20px;
+    background: var(--azul);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9em;
+  }
+  .resetear:hover { background: var(--cyan); }
+
+  .objetivos {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    border-left: 6px solid var(--azul);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  }
+
+  .objetivos h2 { color: var(--azul); margin-bottom: 10px; font-size: 1.2em; }
+  .objetivos ul { list-style: none; padding-left: 0; }
+  .objetivos li { padding: 4px 0; padding-left: 28px; position: relative; }
+  .objetivos li::before { content: "💪"; position: absolute; left: 0; }
+
+  .perfil {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  }
+  .perfil h2 { color: var(--cyan); margin-bottom: 10px; }
+  .perfil input, .perfil select {
+    padding: 8px 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 0.95em;
+    margin: 5px 0;
+    width: 110px;
+    background: white;
+  }
+  .perfil select { width: 220px; }
+  .perfil label {
+    font-size: 0.9em;
+    color: #6b7280;
+  }
+  .perfil-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+  }
+  .perfil-grid > div { display: flex; flex-direction: column; gap: 4px; }
+
+  .aviso-perfil {
+    background: #fef3c7;
+    border-left: 4px solid var(--amarillo);
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #78350f;
+  }
+
+  .nutricion {
+    background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+    border-radius: 16px;
+    padding: 20px 25px;
+    margin-bottom: 25px;
+    border-left: 6px solid var(--verde);
+  }
+
+  .nutricion h2 { color: #047857; margin-bottom: 10px; font-size: 1.2em; }
+  .nutricion-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+  }
+  .nutricion-item {
+    background: white;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 0.9em;
+  }
+  .nutricion-item strong { color: var(--verde); }
+
+  .calculo {
+    color: var(--azul);
+    font-weight: bold;
+    font-size: 1.1em;
+  }
+  .calculo-grande {
+    color: var(--cyan);
+    font-weight: bold;
+    font-size: 1.3em;
+  }
+
+  .dia {
+    background: var(--card);
+    border-radius: 18px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    page-break-inside: avoid;
+  }
+
+  .dia-header {
+    padding: 18px 25px;
+    color: white;
+    font-size: 1.1em;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .lun .dia-header { background: linear-gradient(90deg, var(--azul), var(--azul-claro)); }
+  .mar .dia-header { background: linear-gradient(90deg, #6366f1, #818cf8); }
+  .mie .dia-header { background: linear-gradient(90deg, var(--verde), #34d399); }
+  .jue .dia-header { background: linear-gradient(90deg, var(--naranja), #fb923c); }
+  .vie .dia-header { background: linear-gradient(90deg, var(--cyan), #67e8f9); }
+  .sab .dia-header { background: linear-gradient(90deg, var(--amarillo), #fcd34d); color: #78350f; }
+  .dom .dia-header { background: linear-gradient(90deg, var(--gris), #94a3b8); }
+
+  .focus-badge {
+    background: rgba(255,255,255,0.25);
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    font-weight: bold;
+  }
+
+  .ejercicios { padding: 15px 20px; }
+
+  .ejercicio {
+    display: grid;
+    grid-template-columns: 30px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin-bottom: 6px;
+    background: #fafafa;
+    transition: background 0.2s;
+  }
+
+  .ejercicio:hover { background: #eff6ff; }
+
+  .ejercicio input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--azul);
+    cursor: pointer;
+  }
+
+  .ejercicio label { cursor: pointer; font-size: 0.95em; }
+  .ejercicio input:checked + label {
+    text-decoration: line-through;
+    opacity: 0.5;
+  }
+
+  .series {
+    background: var(--azul);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-size: 0.8em;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+  .mar .series { background: #6366f1; }
+  .mie .series { background: var(--verde); }
+  .jue .series { background: var(--naranja); }
+  .vie .series { background: var(--cyan); }
+  .sab .series { background: #b45309; }
+
+  .icono-rodilla {
+    display: inline-block;
+    background: var(--verde);
+    color: white;
+    font-size: 0.7em;
+    padding: 2px 6px;
+    border-radius: 8px;
+    margin-left: 6px;
+    font-weight: bold;
+  }
+  .icono-fuerza {
+    display: inline-block;
+    background: var(--rojo);
+    color: white;
+    font-size: 0.7em;
+    padding: 2px 6px;
+    border-radius: 8px;
+    margin-left: 6px;
+    font-weight: bold;
+  }
+
+  .nota-dia {
+    padding: 0 20px 15px;
+    font-size: 0.85em;
+    color: #6b7280;
+    font-style: italic;
+  }
+
+  .descanso-msg {
+    padding: 20px;
+    text-align: center;
+    font-size: 1em;
+    color: #475569;
+  }
+
+  .registro-peso {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  }
+  .registro-peso h2 { color: var(--cyan); margin-bottom: 10px; }
+  .registro-peso input {
+    padding: 8px 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 0.95em;
+    margin: 5px;
+    width: 110px;
+  }
+  .registro-peso label {
+    font-size: 0.9em;
+    color: #6b7280;
+  }
+
+  .pr-log {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    border-left: 6px solid var(--rojo);
+  }
+  .pr-log h2 { color: var(--rojo); margin-bottom: 10px; }
+  .pr-log input {
+    padding: 8px 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 0.95em;
+    margin: 4px;
+    width: 90px;
+  }
+  .pr-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .pr-item {
+    background: #fef2f2;
+    padding: 10px 14px;
+    border-radius: 10px;
+  }
+  .pr-item label { display: block; font-size: 0.85em; color: #6b7280; margin-bottom: 4px; }
+
+  .tips {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border-radius: 16px;
+    padding: 20px 25px;
+    margin-bottom: 20px;
+    border-left: 6px solid var(--naranja);
+  }
+  .tips h2 { color: var(--naranja); margin-bottom: 10px; font-size: 1.2em; }
+  .tips ol { padding-left: 25px; }
+  .tips li { padding: 5px 0; }
+
+  footer {
+    text-align: center;
+    margin-top: 30px;
+    color: #6b7280;
+    font-size: 0.9em;
+  }
+
+  @media print {
+    body { background: white; padding: 10px; }
+    .resetear, .progreso { display: none; }
+    .dia { box-shadow: none; border: 1px solid #ddd; }
+    .dia-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+
+  @media (max-width: 700px) {
+    .ejercicio { grid-template-columns: 25px 1fr; }
+    .series { grid-column: 2; justify-self: start; margin-top: 4px; }
+  }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px;">
+    <a href="index.html" style="background: white; color: var(--texto); text-decoration: none; padding: 8px 16px; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); font-size: 0.9em; font-weight: bold;">← Inicio</a>
+    <button onclick="toggleEditMode()" id="edit-btn" style="background: var(--azul); color: white; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 0.9em;">✏️ Editar ejercicios</button>
+  </div>
+
+  <header>
+    <h1>💪 Rutina Semanal — Alan</h1>
+    <p>Enfoque FUERZA · Pecho · Brazos · Pierna · Cuidando rodillas</p>
+  </header>
+
+  <!-- DISCLAIMER -->
+  <div class="disclaimer">
+    ⚠️ <strong>Importante:</strong> Esta rutina está pensada para alguien con molestia leve en rodillas, NO para una lesión activa. Si el dolor es punzante, hay inflamación o aumenta al entrenar → ve con un fisioterapeuta ANTES de seguir. La fuerza bien hecha cura las rodillas, no las daña.
+  </div>
+
+  <!-- ALERTA RODILLAS -->
+  <div class="alerta-rodillas">
+    <h3>🦵 Reglas innegociables para tus rodillas</h3>
+    <ul>
+      <li><strong>NO</strong> saltar (jump rope, burpees, box jumps).</li>
+      <li><strong>NO</strong> sentadilla profunda con peso. Hasta paralela máximo, con control.</li>
+      <li><strong>SÍ</strong> hip thrust, peso muerto rumano, prensa (con rango parcial).</li>
+      <li><strong>Calentamiento de rodilla obligatorio</strong> en día de pierna: 5 min bici suave + extensiones sin peso.</li>
+      <li>Si una rodilla duele DURANTE el ejercicio → para. No es "aguantar", es "no hagas eso".</li>
+      <li>Fortalecer cuádriceps + glúteos + isquios = "vendaje muscular" natural para la rodilla.</li>
+    </ul>
+  </div>
+
+  <!-- PROGRESO -->
+  <div class="progreso">
+    <h2>📊 Progreso de la semana</h2>
+    <div class="progreso-barra">
+      <div class="progreso-fill" id="barra"></div>
+      <div class="progreso-texto" id="texto-progreso">0 / 0 ejercicios</div>
+    </div>
+    <button class="resetear" onclick="resetear()">🔄 Empezar semana nueva</button>
+  </div>
+
+  <!-- OBJETIVOS -->
+  <div class="objetivos">
+    <h2>🎯 Objetivos de Alan</h2>
+    <ul>
+      <li>Aumentar fuerza en pecho (press banca, press inclinado)</li>
+      <li>Crecer y fortalecer brazos (bíceps + tríceps con volumen alto)</li>
+      <li>Ganar fuerza y masa en pierna SIN castigar rodillas</li>
+      <li>Mejorar resistencia general para sostener entrenos más largos</li>
+      <li>Subir peso o repes cada 2 semanas (progresión real)</li>
+    </ul>
+  </div>
+
+  <!-- MI PERFIL -->
+  <div class="perfil">
+    <h2>👤 Mi perfil (calcula mis metas)</h2>
+    <p style="font-size: 0.9em; color: #6b7280; margin-bottom: 5px;">
+      Llena estos datos UNA vez. Cada semana solo actualizas tu peso y todos los números de abajo se recalculan solos.
+    </p>
+    <div class="perfil-grid">
+      <div>
+        <label for="p_peso">Peso actual (kg)</label>
+        <input type="number" step="0.1" id="p_peso" placeholder="85">
+      </div>
+      <div>
+        <label for="p_altura">Altura (cm)</label>
+        <input type="number" step="1" id="p_altura" placeholder="175">
+      </div>
+      <div>
+        <label for="p_edad">Edad</label>
+        <input type="number" step="1" id="p_edad" placeholder="32">
+      </div>
+      <div>
+        <label for="p_actividad">Nivel de actividad</label>
+        <select id="p_actividad">
+          <option value="1.2">Sedentario (oficina, poco ejercicio)</option>
+          <option value="1.375">Ligera (1-3 días ejercicio)</option>
+          <option value="1.55" selected>Moderada (4-5 días — TU PLAN)</option>
+          <option value="1.725">Intensa (6-7 días + activo)</option>
+        </select>
+      </div>
+    </div>
+    <div class="aviso-perfil" id="aviso-perfil">
+      ✏️ Llena tus datos arriba para que se calculen tus calorías y proteína personalizadas.
+    </div>
+  </div>
+
+  <!-- NUTRICIÓN -->
+  <div class="nutricion">
+    <h2>🥩 Reglas para GANAR FUERZA — TUS números</h2>
+    <div class="nutricion-grid">
+      <div class="nutricion-item">
+        <strong>1. Proteína alta</strong><br>
+        Tu meta: <span class="calculo" id="r_proteina">— g/día</span><br>
+        <small>(1.8–2.2g por kg — para construir músculo)</small>
+      </div>
+      <div class="nutricion-item">
+        <strong>2. Calorías para fuerza</strong><br>
+        Mantenimiento: <span class="calculo" id="r_mantenimiento">— kcal</span><br>
+        🎯 Tu objetivo: <span class="calculo-grande" id="r_deficit">— kcal/día</span><br>
+        <small>Rango: <span id="r_rango">— a —</span> kcal</small>
+      </div>
+      <div class="nutricion-item">
+        <strong>3. Carbos clave</strong><br>
+        No los reduzcas. Son el combustible para mover peso. Arroz, papa, avena, plátano antes y después de entrenar.
+      </div>
+      <div class="nutricion-item">
+        <strong>4. Agua</strong><br>
+        Tu meta: <span class="calculo" id="r_agua">— L/día</span><br>
+        <small>(~35 ml por kg de peso)</small>
+      </div>
+      <div class="nutricion-item">
+        <strong>5. Dormir 7-8h</strong><br>
+        Sin sueño NO hay crecimiento muscular. La hormona del crecimiento se libera durmiendo.
+      </div>
+      <div class="nutricion-item">
+        <strong>6. Progresión es la ley</strong><br>
+        Cada 1-2 semanas: +1 rep, +1 kg, o +1 set. Sin progresión no hay fuerza nueva.
+      </div>
+    </div>
+  </div>
+
+  <!-- LUNES - PECHO + TRÍCEPS -->
+  <div class="dia lun">
+    <div class="dia-header">
+      <span>💙 Lunes — PECHO + TRÍCEPS (Push pesado)</span>
+      <span class="focus-badge">FUERZA · 60 min</span>
+    </div>
+    <div class="ejercicios">
+      <div class="ejercicio">
+        <input type="checkbox" id="lun1">
+        <label for="lun1">Calentamiento: 5 min bici + movilidad de hombros y muñecas</label>
+        <span class="series">5 min</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="lun2">
+        <label for="lun2"><strong>Press banca con barra</strong> — ejercicio rey del pecho<span class="icono-fuerza">FUERZA</span></label>
+        <span class="series">4 × 5-6</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="lun3">
+        <label for="lun3"><strong>Press inclinado con mancuernas</strong> (pecho superior)</label>
+        <span class="series">4 × 8</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="lun4">
+        <label for="lun4">Aperturas con mancuernas en banco plano</label>
+        <span class="series">3 × 10</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="lun5">
+        <label for="lun5"><strong>Press francés</strong> (skull crushers) con barra Z</label>
+        <span class="series">4 × 8</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="lun6">
+        <label for="lun6">Tríceps en polea (cuerda o barra)</label>
+        <span class="series">3 × 12</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="lun7">
+        <label for="lun7">Plancha abdominal</label>
+        <span class="series">3 × 45s</span>
+      </div>
+    </div>
+    <div class="nota-dia">💡 Descanso entre series pesadas (press banca): 2 min. Las series 4-5 deben costar — si las haces fácil, sube peso.</div>
+  </div>
+
+  <!-- MARTES - ESPALDA + BÍCEPS -->
+  <div class="dia mar">
+    <div class="dia-header">
+      <span>💜 Martes — ESPALDA + BÍCEPS (Pull pesado)</span>
+      <span class="focus-badge">FUERZA · 60 min</span>
+    </div>
+    <div class="ejercicios">
+      <div class="ejercicio">
+        <input type="checkbox" id="mar1">
+        <label for="mar1">Calentamiento: 5 min movilidad espalda y muñecas</label>
+        <span class="series">5 min</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mar2">
+        <label for="mar2"><strong>Peso muerto convencional</strong> — técnica primero, luego peso<span class="icono-fuerza">FUERZA</span><span class="icono-rodilla">✓ rodillas</span></label>
+        <span class="series">4 × 5</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mar3">
+        <label for="mar3"><strong>Dominadas</strong> (o jalón al pecho si aún no salen)</label>
+        <span class="series">4 × 6-8</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mar4">
+        <label for="mar4"><strong>Remo con barra</strong> agarre prono</label>
+        <span class="series">4 × 8</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mar5">
+        <label for="mar5"><strong>Curl bíceps con barra</strong> — el rey del bíceps</label>
+        <span class="series">4 × 8</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mar6">
+        <label for="mar6">Curl martillo con mancuernas (bíceps + antebrazo)</label>
+        <span class="series">3 × 10</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mar7">
+        <label for="mar7">Encogimiento abdominal en banco</label>
+        <span class="series">3 × 15</span>
+      </div>
+    </div>
+    <div class="nota-dia">💡 Si no salen dominadas: jalón al pecho con peso progresivo + dominadas asistidas con banda. En 6-8 semanas saldrán.</div>
+  </div>
+
+  <!-- MIÉRCOLES - PIERNA SEGURA -->
+  <div class="dia mie">
+    <div class="dia-header">
+      <span>💚 Miércoles — PIERNA (Fuerza, protege rodilla)</span>
+      <span class="focus-badge">FUERZA · 60 min</span>
+    </div>
+    <div class="ejercicios">
+      <div class="ejercicio">
+        <input type="checkbox" id="mie1">
+        <label for="mie1"><strong>Calentamiento extendido rodilla:</strong> 5 min bici + extensiones sin peso + sentadillas vacías</label>
+        <span class="series">8 min</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mie2">
+        <label for="mie2"><strong>Hip thrust con barra</strong><span class="icono-fuerza">FUERZA</span><span class="icono-rodilla">✓ rodillas</span></label>
+        <span class="series">4 × 6</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mie3">
+        <label for="mie3"><strong>Peso muerto rumano</strong> (isquios = estabilidad de rodilla)<span class="icono-rodilla">✓ rodillas</span></label>
+        <span class="series">4 × 8</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mie4">
+        <label for="mie4">Sentadilla a caja paralela con barra<span class="icono-rodilla">✓ rodillas</span></label>
+        <span class="series">4 × 6</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mie5">
+        <label for="mie5">Prensa de pierna rango parcial (no bajar más de 90°)<span class="icono-rodilla">✓ rodillas</span></label>
+        <span class="series">3 × 10</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mie6">
+        <label for="mie6">Curl femoral acostado o sentado (isquios)</label>
+        <span class="series">3 × 12</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mie7">
+        <label for="mie7">Elevación de talones (gemelos)</label>
+        <span class="series">4 × 15</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="mie8">
+        <label for="mie8">Ab wheel o crunch en polea</label>
+        <span class="series">3 × 10</span>
+      </div>
+    </div>
+    <div class="nota-dia">💡 Si una rodilla protesta en cualquier ejercicio: baja peso, sube reps, mete más calentamiento. Mejor 3 buenos meses que 1 semana intensa lesionado.</div>
+  </div>
+
+  <!-- JUEVES - HOMBROS + BRAZOS -->
+  <div class="dia jue">
+    <div class="dia-header">
+      <span>🧡 Jueves — HOMBROS + BRAZOS (volumen extra)</span>
+      <span class="focus-badge">VOLUMEN · 55 min</span>
+    </div>
+    <div class="ejercicios">
+      <div class="ejercicio">
+        <input type="checkbox" id="jue1">
+        <label for="jue1">Calentamiento: 5 min movilidad de hombros con banda</label>
+        <span class="series">5 min</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="jue2">
+        <label for="jue2"><strong>Press militar de pie con barra</strong><span class="icono-fuerza">FUERZA</span></label>
+        <span class="series">4 × 6</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="jue3">
+        <label for="jue3">Press hombro con mancuernas sentado</label>
+        <span class="series">3 × 10</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="jue4">
+        <label for="jue4">Elevaciones laterales con mancuernas</label>
+        <span class="series">4 × 12</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="jue5">
+        <label for="jue5"><strong>Curl alternado</strong> con mancuernas (bíceps)</label>
+        <span class="series">4 × 10</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="jue6">
+        <label for="jue6">Curl predicador o concentrado (pico de bíceps)</label>
+        <span class="series">3 × 12</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="jue7">
+        <label for="jue7"><strong>Tríceps en polea con cuerda</strong></label>
+        <span class="series">4 × 12</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="jue8">
+        <label for="jue8">Fondos en banco para tríceps</label>
+        <span class="series">3 × 12</span>
+      </div>
+    </div>
+    <div class="nota-dia">💡 Este es TU día de brazos. Llévalo al fallo en las últimas series. Bombeo a tope = más crecimiento.</div>
+  </div>
+
+  <!-- VIERNES - PECHO + ESPALDA -->
+  <div class="dia vie">
+    <div class="dia-header">
+      <span>🩵 Viernes — PECHO + ESPALDA (volumen)</span>
+      <span class="focus-badge">VOLUMEN · 55 min</span>
+    </div>
+    <div class="ejercicios">
+      <div class="ejercicio">
+        <input type="checkbox" id="vie1">
+        <label for="vie1">Calentamiento: 5 min hombros, codos, muñecas</label>
+        <span class="series">5 min</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="vie2">
+        <label for="vie2"><strong>Press inclinado con mancuernas</strong></label>
+        <span class="series">4 × 8</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="vie3">
+        <label for="vie3"><strong>Remo con mancuerna</strong> (cada brazo)</label>
+        <span class="series">4 × 8</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="vie4">
+        <label for="vie4">Push-ups (hasta el fallo)</label>
+        <span class="series">3 × max</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="vie5">
+        <label for="vie5">Jalón al pecho agarre cerrado</label>
+        <span class="series">3 × 10</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="vie6">
+        <label for="vie6">Cruces en polea o pec deck</label>
+        <span class="series">3 × 12</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="vie7">
+        <label for="vie7"><strong>Face pull</strong> con cuerda (hombros + postura)</label>
+        <span class="series">3 × 15</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="vie8">
+        <label for="vie8">Plancha + plancha lateral (cada lado)</label>
+        <span class="series">3 × 40s</span>
+      </div>
+    </div>
+    <div class="nota-dia">💡 El face pull lo subestiman todos — protege el hombro Y mejora postura (esencial si trabajas en escritorio).</div>
+  </div>
+
+  <!-- SÁBADO - CARDIO LIGHT OPCIONAL -->
+  <div class="dia sab">
+    <div class="dia-header">
+      <span>💛 Sábado — Movilidad / Cardio suave (opcional)</span>
+      <span class="focus-badge">OPCIONAL · 30-40 min</span>
+    </div>
+    <div class="ejercicios">
+      <div class="ejercicio">
+        <input type="checkbox" id="sab1">
+        <label for="sab1">Caminata suave 30-40 min (al aire libre, NO inclinada)<span class="icono-rodilla">✓ rodillas</span></label>
+        <span class="series">LISS</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="sab2">
+        <label for="sab2"><strong>O</strong> bici suave 20-30 min<span class="icono-rodilla">✓ rodillas</span></label>
+        <span class="series">LISS</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="sab3">
+        <label for="sab3">Estiramientos: pecho, espalda, hombros, cadera, isquios (15 min)</label>
+        <span class="series">flex</span>
+      </div>
+      <div class="ejercicio">
+        <input type="checkbox" id="sab4">
+        <label for="sab4">Foam roller en cuádriceps, isquios, espalda</label>
+        <span class="series">10 min</span>
+      </div>
+    </div>
+    <div class="nota-dia">💡 Como tu foco es fuerza, NO te excedas en cardio. Demasiado cardio canibaliza fuerza y recuperación. Suave es suficiente para salud cardiovascular.</div>
+  </div>
+
+  <!-- DOMINGO - DESCANSO -->
+  <div class="dia dom">
+    <div class="dia-header">
+      <span>🤍 Domingo — Descanso total</span>
+      <span class="focus-badge">RECUPERACIÓN</span>
+    </div>
+    <div class="descanso-msg">
+      🛋️ Hoy descansas. Duerme bien, hidrata, come proteína.<br>
+      <strong>Tus músculos crecen y se fortalecen cuando descansas, no cuando entrenas.</strong>
+    </div>
+  </div>
+
+  <!-- PR LOG -->
+  <div class="pr-log">
+    <h2>🏆 Mis PRs (Records personales)</h2>
+    <p style="font-size: 0.85em; color: #6b7280; margin-bottom: 10px;">
+      Anota tu mejor peso × repes en cada ejercicio rey. Cada 2 semanas intenta superarlo. Esta es la prueba REAL de que estás ganando fuerza.
+    </p>
+    <div class="pr-grid">
+      <div class="pr-item">
+        <label>🏋️ Press banca (kg × reps)</label>
+        <input type="text" id="pr_banca" placeholder="60 × 6">
+      </div>
+      <div class="pr-item">
+        <label>⚡ Peso muerto (kg × reps)</label>
+        <input type="text" id="pr_pm" placeholder="100 × 5">
+      </div>
+      <div class="pr-item">
+        <label>💪 Sentadilla a caja (kg × reps)</label>
+        <input type="text" id="pr_sq" placeholder="70 × 6">
+      </div>
+      <div class="pr-item">
+        <label>🎯 Press militar (kg × reps)</label>
+        <input type="text" id="pr_pm_mil" placeholder="40 × 6">
+      </div>
+      <div class="pr-item">
+        <label>🍑 Hip thrust (kg × reps)</label>
+        <input type="text" id="pr_hip" placeholder="90 × 6">
+      </div>
+      <div class="pr-item">
+        <label>💪 Curl bíceps barra (kg × reps)</label>
+        <input type="text" id="pr_curl" placeholder="25 × 8">
+      </div>
+    </div>
+  </div>
+
+  <!-- REGISTRO MEDIDAS -->
+  <div class="registro-peso">
+    <h2>📏 Medidas semanales (opcional)</h2>
+    <p style="font-size: 0.85em; color: #6b7280; margin-bottom: 10px;">
+      Para enfoque de fuerza, lo que más importa es lo de arriba (PRs subiendo). Estas medidas son extra para ver el progreso visible.
+    </p>
+    <div>
+      <label>Pecho relajado (cm): <input type="number" step="0.5" id="pecho"></label>
+      <label>Brazo contraído (cm): <input type="number" step="0.5" id="brazo"></label>
+      <label>Muslo (cm): <input type="number" step="0.5" id="muslo"></label>
+    </div>
+  </div>
+
+  <!-- TIPS -->
+  <div class="tips">
+    <h2>✨ Tips clave para ganar fuerza</h2>
+    <ol>
+      <li><strong>Progresión = ley.</strong> Cada 1-2 semanas debes mover MÁS peso o MÁS reps que la semana anterior. Lleva el PR log religiosamente.</li>
+      <li><strong>Descanso entre series pesadas: 2-3 minutos.</strong> No es flojera, es ciencia. El sistema neural necesita ese tiempo para repetir esfuerzo máximo.</li>
+      <li><strong>Técnica antes que peso.</strong> Mejor 60kg perfectos que 80kg torcidos. La mala técnica te lesiona y limita progreso.</li>
+      <li><strong>Come ENOUGH.</strong> Para ganar fuerza necesitas calorías y proteína. Comer poco = no creces ni te haces fuerte.</li>
+      <li><strong>Dormir 7-8h o no hay crecimiento.</strong> La hormona del crecimiento se libera durmiendo. Sin sueño no hay músculo nuevo.</li>
+      <li><strong>Carbos antes y después de entrenar.</strong> Son combustible. Arroz, papa, plátano, avena — no los reduzcas.</li>
+      <li><strong>Para rodillas:</strong> fortalecer cuádriceps + glúteos + isquios = blindaje natural. Esta rutina hace exactamente eso.</li>
+      <li><strong>2 semanas malas = 1 mes perdido.</strong> Si te lesionas por ego (subir peso antes de tiempo), pierdes todo lo ganado. Paciencia.</li>
+    </ol>
+  </div>
+
+  <footer>
+    💪 Hecho para Alan · Progresión &gt; Intensidad · Imprime con Ctrl+P
+  </footer>
+
+</div>
+
+<script>
+  const checks = document.querySelectorAll('input[type="checkbox"]');
+  const total = checks.length;
+
+  function actualizarProgreso() {
+    const completadas = document.querySelectorAll('input[type="checkbox"]:checked').length;
+    const porcentaje = total > 0 ? (completadas / total) * 100 : 0;
+    document.getElementById('barra').style.width = porcentaje + '%';
+    document.getElementById('texto-progreso').textContent =
+      completadas + ' / ' + total + ' ejercicios (' + Math.round(porcentaje) + '%)';
+  }
+
+  checks.forEach(check => {
+    const guardado = localStorage.getItem('alan_' + check.id);
+    if (guardado === 'true') check.checked = true;
+
+    check.addEventListener('change', () => {
+      localStorage.setItem('alan_' + check.id, check.checked);
+      actualizarProgreso();
+    });
+  });
+
+  // Medidas y PRs
+  ['pecho', 'brazo', 'muslo', 'pr_banca', 'pr_pm', 'pr_sq', 'pr_pm_mil', 'pr_hip', 'pr_curl'].forEach(id => {
+    const input = document.getElementById(id);
+    if (!input) return;
+    const guardado = localStorage.getItem('alan_' + id);
+    if (guardado) input.value = guardado;
+    input.addEventListener('change', () => {
+      localStorage.setItem('alan_' + id, input.value);
+    });
+  });
+
+  // ===== PERFIL + CÁLCULOS NUTRICIONALES (HOMBRE - FUERZA) =====
+  const perfilIds = ['p_peso', 'p_altura', 'p_edad', 'p_actividad'];
+
+  function calcularNutricion() {
+    const peso = parseFloat(document.getElementById('p_peso').value);
+    const altura = parseFloat(document.getElementById('p_altura').value);
+    const edad = parseFloat(document.getElementById('p_edad').value);
+    const actividad = parseFloat(document.getElementById('p_actividad').value);
+
+    const aviso = document.getElementById('aviso-perfil');
+
+    if (!peso || !altura || !edad) {
+      document.getElementById('r_proteina').textContent = '— g/día';
+      document.getElementById('r_mantenimiento').textContent = '— kcal';
+      document.getElementById('r_deficit').textContent = '— kcal/día';
+      document.getElementById('r_rango').textContent = '— a —';
+      document.getElementById('r_agua').textContent = '— L/día';
+      aviso.innerHTML = '✏️ Llena tus datos arriba para que se calculen tus calorías y proteína personalizadas.';
+      aviso.style.background = '#fef3c7';
+      aviso.style.borderLeftColor = 'var(--amarillo)';
+      aviso.style.color = '#78350f';
+      return;
+    }
+
+    // Fórmula Mifflin-St Jeor (HOMBRE)
+    const bmr = (10 * peso) + (6.25 * altura) - (5 * edad) + 5;
+    const tdee = bmr * actividad;
+
+    // Para ganar fuerza: ligero superávit (+200 kcal) o mantenimiento
+    // Recomendación principal: mantenimiento (0) — recomposición natural
+    const objetivo = Math.round(tdee);
+    const rangoMin = Math.round(tdee - 200); // si quiere recomp con leve pérdida de grasa
+    const rangoMax = Math.round(tdee + 300); // si quiere ganar músculo más rápido
+
+    // Proteína (alta para construir músculo)
+    const proteinaMin = Math.round(peso * 1.8);
+    const proteinaMax = Math.round(peso * 2.2);
+
+    // Agua
+    const aguaL = (peso * 35 / 1000).toFixed(1);
+
+    document.getElementById('r_proteina').textContent = proteinaMin + '–' + proteinaMax + ' g/día';
+    document.getElementById('r_mantenimiento').textContent = Math.round(tdee) + ' kcal';
+    document.getElementById('r_deficit').textContent = objetivo + ' kcal/día';
+    document.getElementById('r_rango').textContent = rangoMin + ' a ' + rangoMax;
+    document.getElementById('r_agua').textContent = aguaL + ' L/día';
+
+    aviso.innerHTML = '✅ <strong>¡Listo!</strong> Tu objetivo está en <strong>mantenimiento</strong> (ideal para ganar fuerza + recomposición). Si quieres ganar músculo más rápido, sube a +200 kcal. Si quieres bajar grasa lento, baja a -200.';
+    aviso.style.background = '#dcfce7';
+    aviso.style.borderLeftColor = 'var(--verde)';
+    aviso.style.color = '#047857';
+  }
+
+  perfilIds.forEach(id => {
+    const el = document.getElementById(id);
+    const guardado = localStorage.getItem('alan_' + id);
+    if (guardado) el.value = guardado;
+    el.addEventListener('input', () => {
+      localStorage.setItem('alan_' + id, el.value);
+      calcularNutricion();
+    });
+    el.addEventListener('change', () => {
+      localStorage.setItem('alan_' + id, el.value);
+      calcularNutricion();
+    });
+  });
+
+  actualizarProgreso();
+  calcularNutricion();
+
+  function resetear() {
+    if (confirm('¿Empezar una semana nueva? Se desmarcarán todos los ejercicios.')) {
+      checks.forEach(check => {
+        check.checked = false;
+        localStorage.removeItem('alan_' + check.id);
+      });
+      actualizarProgreso();
+    }
+  }
+
+  // ===== MODO EDICIÓN DE EJERCICIOS =====
+  let editMode = false;
+
+  function toggleEditMode() {
+    editMode = !editMode;
+    const labels = document.querySelectorAll('.ejercicio label');
+    const btn = document.getElementById('edit-btn');
+
+    labels.forEach(label => {
+      label.contentEditable = editMode;
+      if (editMode) {
+        label.style.background = '#fef3c7';
+        label.style.padding = '4px 8px';
+        label.style.borderRadius = '6px';
+        label.style.outline = '1px dashed #f59e0b';
+      } else {
+        label.style.background = '';
+        label.style.padding = '';
+        label.style.outline = '';
+        const forId = label.getAttribute('for');
+        if (forId) {
+          localStorage.setItem('alan_edit_' + forId, label.innerHTML);
+        }
+      }
+    });
+
+    if (editMode) {
+      btn.textContent = '💾 Guardar cambios';
+      btn.style.background = '#16a34a';
+    } else {
+      btn.textContent = '✏️ Editar ejercicios';
+      btn.style.background = 'var(--azul)';
+    }
+  }
+
+  // Cargar ediciones guardadas
+  document.querySelectorAll('.ejercicio label').forEach(label => {
+    const forId = label.getAttribute('for');
+    if (forId) {
+      const saved = localStorage.getItem('alan_edit_' + forId);
+      if (saved) label.innerHTML = saved;
+    }
+  });
+</script>
+</body>
+</html>

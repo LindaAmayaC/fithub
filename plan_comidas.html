@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Plan de Comidas Antiinflamatorio — Linda & Alan</title>
+<style>
+  :root {
+    --verde: #16a34a;
+    --verde-claro: #86efac;
+    --verde-bg: #f0fdf4;
+    --rosa: #ec4899;
+    --azul: #1e40af;
+    --naranja: #f97316;
+    --rojo: #dc2626;
+    --amarillo: #fbbf24;
+    --cyan: #06b6d4;
+    --texto: #1f2937;
+    --card: #ffffff;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg, #f0fdf4 0%, #ecfeff 50%, #fef9c3 100%);
+    color: var(--texto);
+    padding: 30px 20px;
+    line-height: 1.5;
+  }
+
+  .contenedor { max-width: 1100px; margin: 0 auto; }
+
+  header {
+    background: linear-gradient(135deg, var(--verde), #22c55e);
+    color: white;
+    padding: 30px;
+    border-radius: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 30px rgba(22, 163, 74, 0.3);
+    text-align: center;
+  }
+  header h1 { font-size: 1.9em; margin-bottom: 8px; }
+  header p { opacity: 0.95; }
+
+  .seccion {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 22px 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  }
+  .seccion h2 { margin-bottom: 12px; font-size: 1.25em; }
+
+  .evitar {
+    background: linear-gradient(135deg, #fee2e2, #fecaca);
+    border-left: 6px solid var(--rojo);
+  }
+  .evitar h2 { color: var(--rojo); }
+
+  .priorizar {
+    background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+    border-left: 6px solid var(--verde);
+  }
+  .priorizar h2 { color: var(--verde); }
+
+  .lista-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .lista-item {
+    background: white;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 0.9em;
+  }
+  .lista-item strong { display: block; margin-bottom: 4px; }
+
+  .objetivos-personas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 15px;
+    margin-bottom: 25px;
+  }
+
+  .persona {
+    border-radius: 16px;
+    padding: 22px;
+    color: white;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  }
+  .linda-card { background: linear-gradient(135deg, var(--rosa), #c084fc); }
+  .alan-card { background: linear-gradient(135deg, var(--azul), var(--cyan)); }
+
+  .persona h3 { font-size: 1.3em; margin-bottom: 10px; }
+  .persona .meta {
+    background: rgba(255,255,255,0.2);
+    padding: 8px 12px;
+    border-radius: 10px;
+    margin: 5px 0;
+    font-size: 0.95em;
+  }
+  .persona small { opacity: 0.85; display: block; margin-top: 8px; }
+
+  .categoria-titulo {
+    background: linear-gradient(90deg, var(--naranja), var(--amarillo));
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 1.15em;
+    font-weight: bold;
+    margin: 25px 0 12px;
+  }
+
+  .comidas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 15px;
+  }
+
+  .comida {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    border-top: 4px solid var(--verde);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .comida h4 {
+    color: var(--verde);
+    margin-bottom: 8px;
+    font-size: 1.05em;
+  }
+
+  .ingredientes {
+    font-size: 0.88em;
+    color: #4b5563;
+    margin: 8px 0;
+    padding-left: 18px;
+  }
+  .ingredientes li { padding: 2px 0; }
+
+  .macros {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed #e5e7eb;
+  }
+  .macro {
+    text-align: center;
+    background: #f9fafb;
+    padding: 6px 4px;
+    border-radius: 8px;
+    font-size: 0.75em;
+  }
+  .macro strong { display: block; color: var(--azul); font-size: 1.1em; }
+
+  .tags {
+    margin-top: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .tag {
+    background: var(--verde-bg);
+    color: var(--verde);
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-size: 0.72em;
+    font-weight: bold;
+  }
+  .tag.antiinf { background: #fef3c7; color: #78350f; }
+  .tag.post { background: #dbeafe; color: var(--azul); }
+  .tag.snack { background: #fce7f3; color: var(--rosa); }
+
+  .dia-tipo {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 22px 25px;
+    margin: 15px 0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+    border-top: 5px solid var(--rosa);
+  }
+  .dia-tipo.alan { border-top-color: var(--azul); }
+  .dia-tipo h3 { margin-bottom: 12px; }
+  .dia-tipo.linda h3 { color: var(--rosa); }
+  .dia-tipo.alan h3 { color: var(--azul); }
+
+  .dia-tipo table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.9em;
+  }
+  .dia-tipo th, .dia-tipo td {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  .dia-tipo th { background: #f9fafb; font-weight: bold; }
+  .dia-tipo tfoot td { font-weight: bold; background: #f0fdf4; }
+
+  .nota {
+    background: #fef3c7;
+    border-left: 4px solid var(--amarillo);
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.88em;
+    color: #78350f;
+    margin-top: 10px;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 30px;
+    color: #6b7280;
+    font-size: 0.9em;
+  }
+
+  @media print {
+    body { background: white; padding: 10px; }
+    .comida, .dia-tipo, .seccion { box-shadow: none; border: 1px solid #ddd; }
+    header, .categoria-titulo, .persona { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+<div class="contenedor">
+
+  <div style="margin-bottom: 15px;">
+    <a href="index.html" style="background: white; color: var(--texto); text-decoration: none; padding: 8px 16px; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); font-size: 0.9em; font-weight: bold; display: inline-block;">← Inicio</a>
+  </div>
+
+  <header>
+    <h1>🥗 Plan de Comidas Antiinflamatorio</h1>
+    <p>Linda & Alan · CON carbohidratos buenos · Sin perder energía</p>
+  </header>
+
+  <!-- DATOS PARA CÁLCULO DINÁMICO -->
+  <div class="seccion" style="background: linear-gradient(135deg, #f5f3ff, #ede9fe); border-left: 6px solid #7c3aed;">
+    <h2 style="color: #6d28d9;">🔄 Mis datos (calcula mis macros)</h2>
+    <p style="font-size: 0.9em; color: #6b7280; margin-bottom: 10px;">
+      Llena los datos de los dos. Si ya los pusiste en tus rutinas semanales, pueden auto-cargarse abajo. Cada vez que cambien el peso, todos los números se ajustan solos.
+    </p>
+    <button onclick="sincronizar()" style="background: #7c3aed; color: white; border: none; padding: 8px 18px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 0.9em; margin-bottom: 12px;">🔄 Sincronizar desde rutinas semanales</button>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px;">
+      <!-- LINDA -->
+      <div style="background: linear-gradient(135deg, #fce7f3, #fbcfe8); padding: 15px; border-radius: 12px;">
+        <h3 style="color: var(--rosa); margin-bottom: 8px;">🍑 Linda</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.9em;">
+          <label>Peso (kg)<input type="number" step="0.1" id="l_peso" style="width: 100%; padding: 6px; border-radius: 6px; border: 1px solid #f9a8d4;"></label>
+          <label>Altura (cm)<input type="number" id="l_altura" style="width: 100%; padding: 6px; border-radius: 6px; border: 1px solid #f9a8d4;"></label>
+          <label>Edad<input type="number" id="l_edad" style="width: 100%; padding: 6px; border-radius: 6px; border: 1px solid #f9a8d4;"></label>
+          <label>Actividad
+            <select id="l_actividad" style="width: 100%; padding: 6px; border-radius: 6px; border: 1px solid #f9a8d4;">
+              <option value="1.2">Sedentaria</option>
+              <option value="1.375">Ligera</option>
+              <option value="1.55" selected>Moderada</option>
+              <option value="1.725">Intensa</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <!-- ALAN -->
+      <div style="background: linear-gradient(135deg, #dbeafe, #bfdbfe); padding: 15px; border-radius: 12px;">
+        <h3 style="color: var(--azul); margin-bottom: 8px;">💪 Alan</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.9em;">
+          <label>Peso (kg)<input type="number" step="0.1" id="a_peso" style="width: 100%; padding: 6px; border-radius: 6px; border: 1px solid #93c5fd;"></label>
+          <label>Altura (cm)<input type="number" id="a_altura" style="width: 100%; padding: 6px; border-radius: 6px; border: 1px solid #93c5fd;"></label>
+          <label>Edad<input type="number" id="a_edad" style="width: 100%; padding: 6px; border-radius: 6px; border: 1px solid #93c5fd;"></label>
+          <label>Actividad
+            <select id="a_actividad" style="width: 100%; padding: 6px; border-radius: 6px; border: 1px solid #93c5fd;">
+              <option value="1.2">Sedentario</option>
+              <option value="1.375">Ligera</option>
+              <option value="1.55" selected>Moderada</option>
+              <option value="1.725">Intensa</option>
+            </select>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div id="sync-aviso" style="font-size: 0.85em; color: #6b7280; margin-top: 10px; font-style: italic;"></div>
+  </div>
+
+  <!-- OBJETIVOS PERSONALIZADOS -->
+  <div class="objetivos-personas">
+    <div class="persona linda-card">
+      <h3>🍑 Linda — Pérdida de grasa</h3>
+      <div class="meta">🎯 <span id="linda_kcal">~1700</span> kcal/día</div>
+      <div class="meta">🥩 <span id="linda_prot">110-130</span>g proteína</div>
+      <div class="meta">💧 <span id="linda_agua">~2.3</span> L agua · 👟 10.000 pasos</div>
+      <small>Déficit agresivo + proteína alta para bajar grasa sin perder glúteo.</small>
+    </div>
+    <div class="persona alan-card">
+      <h3>💪 Alan — Ganar fuerza</h3>
+      <div class="meta">🎯 <span id="alan_kcal">~2400</span> kcal/día</div>
+      <div class="meta">🥩 <span id="alan_prot">150-180</span>g proteína</div>
+      <div class="meta">💧 <span id="alan_agua">~3</span> L agua · 🏆 Subir PRs cada 2 sem</div>
+      <small>Mantenimiento + proteína alta para construir músculo y fuerza.</small>
+    </div>
+  </div>
+  <div class="nota" id="comparativa-aviso">
+    📝 <strong>Llena los datos arriba</strong> para ver tus números personalizados y la comparativa con los días tipo.
+  </div>
+
+  <!-- QUÉ EVITAR -->
+  <div class="seccion evitar">
+    <h2>🚫 Alimentos que INFLAMAN (reducir al máximo)</h2>
+    <div class="lista-grid">
+      <div class="lista-item"><strong>Azúcar refinada</strong>Gaseosas, dulces, postres, jugos industriales.</div>
+      <div class="lista-item"><strong>Harinas blancas</strong>Pan blanco, galletas, pasteles, hojaldres.</div>
+      <div class="lista-item"><strong>Ultraprocesados</strong>Nuggets, salchichas, embutidos con nitritos.</div>
+      <div class="lista-item"><strong>Grasas trans</strong>Margarina, frituras de calle, productos "horneados" industriales.</div>
+      <div class="lista-item"><strong>Aceites refinados</strong>Soya, maíz, girasol (en exceso). Cocinar con ellos = inflamación.</div>
+      <div class="lista-item"><strong>Alcohol</strong>1-2 veces/semana máximo. Más = grasa abdominal + cortisol alto.</div>
+      <div class="lista-item"><strong>Lácteos enteros (si te caen pesados)</strong>No todos reaccionan igual. Si tienes hinchazón, prueba lactosa-free 2 semanas.</div>
+    </div>
+  </div>
+
+  <!-- QUÉ PRIORIZAR -->
+  <div class="seccion priorizar">
+    <h2>✅ Alimentos ANTIINFLAMATORIOS (la base)</h2>
+    <div class="lista-grid">
+      <div class="lista-item"><strong>Carbs buenos</strong>Avena, arroz basmati, camote, papa, quinoa, plátano verde.</div>
+      <div class="lista-item"><strong>Legumbres</strong>Lentejas, garbanzos, frijoles. Carb + proteína + fibra.</div>
+      <div class="lista-item"><strong>Proteína magra</strong>Pollo, pavo, pescados, huevos, atún, yogur griego.</div>
+      <div class="lista-item"><strong>Pescado azul</strong>Salmón, sardinas, atún. Omega 3 = antiinflamatorio top.</div>
+      <div class="lista-item"><strong>Grasas buenas</strong>Aguacate, aceite de oliva extra virgen, nueces, almendras.</div>
+      <div class="lista-item"><strong>Vegetales y hojas</strong>Espinaca, kale, brócoli, tomate, pepino — ilimitado.</div>
+      <div class="lista-item"><strong>Frutos rojos</strong>Fresas, arándanos, frambuesas. Bajos en azúcar, altos en antioxidantes.</div>
+      <div class="lista-item"><strong>Especias mágicas</strong>Cúrcuma + pimienta negra, jengibre, canela, ajo.</div>
+      <div class="lista-item"><strong>Té verde / matcha</strong>Antiinflamatorio y ayuda a quemar grasa. 1-2 tazas/día.</div>
+    </div>
+  </div>
+
+  <!-- DESAYUNOS -->
+  <div class="categoria-titulo">🌅 Desayunos</div>
+  <div class="comidas-grid">
+
+    <div class="comida">
+      <h4>🥣 Avena bowl con huevos</h4>
+      <ul class="ingredientes">
+        <li>50g avena (1/2 taza cruda)</li>
+        <li>1 taza leche o bebida vegetal</li>
+        <li>1 cdita canela + 1 cdita miel</li>
+        <li>100g frutos rojos</li>
+        <li>2 huevos revueltos aparte</li>
+      </ul>
+      <div class="tags"><span class="tag antiinf">antiinflamatorio</span><span class="tag">carbs lentos</span></div>
+      <div class="macros">
+        <div class="macro"><strong>450</strong>kcal</div>
+        <div class="macro"><strong>27g</strong>P</div>
+        <div class="macro"><strong>55g</strong>C</div>
+        <div class="macro"><strong>14g</strong>G</div>
+      </div>
+    </div>
+
+    <div class="comida">
+      <h4>🍳 Tortilla + tostada aguacate</h4>
+      <ul class="ingredientes">
+        <li>3 huevos + puñado espinaca + tomate</li>
+        <li>1 rebanada pan integral</li>
+        <li>1/2 aguacate</li>
+        <li>Café o té verde</li>
+      </ul>
+      <div class="tags"><span class="tag antiinf">antiinflamatorio</span><span class="tag">alta proteína</span></div>
+      <div class="macros">
+        <div class="macro"><strong>480</strong>kcal</div>
+        <div class="macro"><strong>26g</strong>P</div>
+        <div class="macro"><strong>28g</strong>C</div>
+        <div class="macro"><strong>28g</strong>G</div>
+      </div>
+    </div>
+
+    <div class="comida">
+      <h4>🥄 Yogur griego + banana</h4>
+      <ul class="ingredientes">
+        <li>200g yogur griego natural</li>
+        <li>1 banana mediana</li>
+        <li>30g avena cruda</li>
+        <li>1 cda nueces o almendras</li>
+        <li>1 cdita miel</li>
+      </ul>
+      <div class="tags"><span class="tag">proteína fácil</span><span class="tag post">post-entreno</span></div>
+      <div class="macros">
+        <div class="macro"><strong>430</strong>kcal</div>
+        <div class="macro"><strong>28g</strong>P</div>
+        <div class="macro"><strong>58g</strong>C</div>
+        <div class="macro"><strong>10g</strong>G</div>
+      </div>
+    </div>
+
+    <div class="comida">
+      <h4>🥑 Tostada aguacate + huevo pochado</h4>
+      <ul class="ingredientes">
+        <li>2 rebanadas pan integral o sourdough</li>
+        <li>1 aguacate completo</li>
+        <li>2 huevos pochados</li>
+        <li>Sal, pimienta, chile (opcional)</li>
+        <li>Tomate cherry al lado</li>
+      </ul>
+      <div class="tags"><span class="tag antiinf">antiinflamatorio</span></div>
+      <div class="macros">
+        <div class="macro"><strong>520</strong>kcal</div>
+        <div class="macro"><strong>22g</strong>P</div>
+        <div class="macro"><strong>38g</strong>C</div>
+        <div class="macro"><strong>30g</strong>G</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ALMUERZOS -->
+  <div class="categoria-titulo">🍽️ Almuerzos / Comidas fuertes</div>
+  <div class="comidas-grid">
+
+    <div class="comida">
+      <h4>🍗 Pollo + arroz basmati + ensalada</h4>
+      <ul class="ingredientes">
+        <li>150g pollo a la plancha</li>
+        <li>1 taza arroz basmati cocido</li>
+        <li>Ensalada grande: lechuga, tomate, pepino</li>
+        <li>1/2 aguacate</li>
+        <li>1 cda aceite oliva + limón</li>
+      </ul>
+      <div class="tags"><span class="tag">clásico balanceado</span></div>
+      <div class="macros">
+        <div class="macro"><strong>600</strong>kcal</div>
+        <div class="macro"><strong>45g</strong>P</div>
+        <div class="macro"><strong>55g</strong>C</div>
+        <div class="macro"><strong>22g</strong>G</div>
+      </div>
+    </div>
+
+    <div class="comida">
+      <h4>🐟 Salmón + camote + brócoli</h4>
+      <ul class="ingredientes">
+        <li>150g salmón al horno</li>
+        <li>200g camote asado (1 mediano)</li>
+        <li>1 taza brócoli al vapor</li>
+        <li>1 cda aceite oliva</li>
+        <li>Limón y especias</li>
+      </ul>
+      <div class="tags"><span class="tag antiinf">omega 3 alto</span><span class="tag">antiinflamatorio top</span></div>
+      <div class="macros">
+        <div class="macro"><strong>620</strong>kcal</div>
+        <div class="macro"><strong>38g</strong>P</div>
+        <div class="macro"><strong>50g</strong>C</div>
+        <div class="macro"><strong>28g</strong>G</div>
+      </div>
+    </div>
+
+    <div class="comida">
+      <h4>🥗 Bowl quinoa + atún + garbanzos</h4>
+      <ul class="ingredientes">
+        <li>1 taza quinoa cocida</li>
+        <li>1 lata atún en agua escurrido</li>
+        <li>1/2 taza garbanzos cocidos</li>
+        <li>Espinaca, tomate, pepino, zanahoria rallada</li>
+        <li>Aceite oliva + limón + cúrcuma</li>
+      </ul>
+      <div class="tags"><span class="tag antiinf">antiinflamatorio</span><span class="tag">fibra alta</span></div>
+      <div class="macros">
+        <div class="macro"><strong>580</strong>kcal</div>
+        <div class="macro"><strong>40g</strong>P</div>
+        <div class="macro"><strong>60g</strong>C</div>
+        <div class="macro"><strong>18g</strong>G</div>
+      </div>
+    </div>
+
+    <div class="comida">
+      <h4>🥩 Carne magra + lentejas + arroz</h4>
+      <ul class="ingredientes">
+        <li>120g carne magra (lomo, posta) a la plancha</li>
+        <li>1/2 taza arroz integral cocido</li>
+        <li>3/4 taza lentejas guisadas</li>
+        <li>Ensalada verde + aguacate (1/4)</li>
+      </ul>
+      <div class="tags"><span class="tag">hierro alto</span></div>
+      <div class="macros">
+        <div class="macro"><strong>650</strong>kcal</div>
+        <div class="macro"><strong>45g</strong>P</div>
+        <div class="macro"><strong>65g</strong>C</div>
+        <div class="macro"><strong>20g</strong>G</div>
+      </div>
+    </div>
+
+    <div class="comida">
+      <h4>🍤 Pollo con vegetales + papa</h4>
+      <ul class="ingredientes">
+        <li>150g pollo en cubos</li>
+        <li>200g papa cocida o al horno</li>
+        <li>Pimientos, calabacín, cebolla salteados</li>
+        <li>1 cda aceite oliva + ajo + cúrcuma</li>
+      </ul>
+      <div class="tags"><span class="tag antiinf">antiinflamatorio</span></div>
+      <div class="macros">
+        <div class="macro"><strong>560</strong>kcal</div>
+        <div class="macro"><strong>42g</strong>P</div>
+        <div class="macro"><strong>55g</strong>C</div>
+        <div class="macro"><strong>18g</strong>G</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CENAS -->
+  <div class="categoria-titulo">🌙 Cenas (más ligeras)</div>
+  <div class="comidas-grid">
+
+    <div class="comida">
+      <h4>🐠 Pescado blanco + vegetales</h4>
+      <ul class="ingredientes">
+        <li>150g tilapia/merluza/corvina al vapor</li>
+        <li>1/2 taza arroz integral o quinoa</li>
+        <li>Vegetales asados (calabacín, pimiento)</li>
+        <li>1 cdita aceite oliva</li>
+      </ul>
+      <div class="tags"><span class="tag antiinf">ligero</span></div>
+      <div class="macros">
+        <div class="macro"><strong>420</strong>kcal</div>
+        <div class="macro"><strong>35g</strong>P</div>
+        <div class="macro"><strong>35g</strong>C</div>
+        <div class="macro"><strong>14g</strong>G</div>
+      </div>
+    </div>
+
+    <div class="comida">
+      <h4>🍳 Tortilla espinaca + tostada</h4>
+      <ul class="ingredientes">
+        <li>3 huevos + 2 cdas claras</li>
+        <li>Espinaca, champiñones, cebolla</li>
+        <li>1 rebanada pan integral</li>
+        <li>1/4 aguacate</li>
+      </ul>
+      <div class="tags"><span class="tag">opción rápida</span></div>
+      <div class="macros">
+        <div class="macro"><strong>410</strong>kcal</div>
+        <div class="macro"><strong>28g</strong>P</div>
+        <div class="macro"><strong>25g</strong>C</div>
+        <div class="macro"><strong>22g</strong>G</div>
+      </div>
+    </div>
+
+    <div class="comida">
+      <h4>🥘 Pollo + crema coliflor + arroz</h4>
+      <ul class="ingredientes">
+        <li>130g pechuga pollo</li>
+        <li>Crema de coliflor (sin lácteo, con caldo)</li>
+        <li>1/3 taza arroz basmati</li>
+        <li>Espinaca salteada</li>
+      </ul>
+      <div class="tags"><span class="tag">reconfortante</span></div>
+      <div class="macros">
+        <div class="macro"><strong>440</strong>kcal</div>
+        <div class="macro"><strong>38g</strong>P</div>
+        <div class="macro"><strong>35g</strong>C</div>
+        <div class="macro"><strong>14g</strong>G</div>
+      </div>
+    </div>
+
+    <div class="comida">
+      <h4>🥫 Atún + ensalada + tostada</h4>
+      <ul class="ingredientes">
+        <li>1 lata atún en agua</li>
+        <li>Tomate, pepino, cebolla morada</li>
+        <li>1/2 aguacate</li>
+        <li>1 rebanada pan integral</li>
+        <li>Aceite oliva + limón</li>
+      </ul>
+      <div class="tags"><span class="tag antiinf">rápida</span></div>
+      <div class="macros">
+        <div class="macro"><strong>400</strong>kcal</div>
+        <div class="macro"><strong>32g</strong>P</div>
+        <div class="macro"><strong>28g</strong>C</div>
+        <div class="macro"><strong>18g</strong>G</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SNACKS Y PRE/POST -->
+  <div class="categoria-titulo">⚡ Snacks y Pre/Post entreno</div>
+  <div class="comidas-grid">
+
+    <div class="comida">
+      <h4>🥤 Batido post-entreno</h4>
+      <ul class="ingredientes">
+        <li>1 scoop whey (30g)</li>
+        <li>1 banana</li>
+        <li>30g avena</li>
+        <li>250ml leche o agua</li>
+        <li>1 cdita canela</li>
+      </ul>
+      <div class="tags"><span class="tag post">post-entreno</span></div>
+      <div class="macros">
+        <div class="macro"><strong>380</strong>kcal</div>
+        <div class="macro"><strong>32g</strong>P</div>
+        <div class="macro"><strong>50g</strong>C</div>
+        <div class="macro"><strong>5g</strong>G</div>
+      </div>
+    </div>
+
+    <div class="comida">
+      <h4>🍌 Banana + mantequilla maní</h4>
+      <ul class="ingredientes">
+        <li>1 banana</li>
+        <li>2 cdas mantequilla de maní natural</li>
+      </ul>
+      <div class="tags"><span class="tag snack">snack rápido</span></div>
+      <div class="macros">
+        <div class="macro"><strong>290</strong>kcal</div>
+        <div class="macro"><strong>9g</strong>P</div>
+        <div class="macro"><strong>32g</strong>C</div>
+        <div class="macro"><strong>16g</strong>G</div>
+      </div>
+    </div>
+
+    <div class="comida">
+      <h4>🥕 Hummus + vegetales</h4>
+      <ul class="ingredientes">
+        <li>4 cdas hummus</li>
+        <li>Zanahoria + pepino + apio en bastones</li>
+        <li>1 tostada integral pequeña</li>
+      </ul>
+      <div class="tags"><span class="tag snack">fibra</span><span class="tag antiinf">antiinflamatorio</span></div>
+      <div class="macros">
+        <div class="macro"><strong>220</strong>kcal</div>
+        <div class="macro"><strong>8g</strong>P</div>
+        <div class="macro"><strong>25g</strong>C</div>
+        <div class="macro"><strong>10g</strong>G</div>
+      </div>
+    </div>
+
+    <div class="comida">
+      <h4>🥜 Yogur griego + nueces</h4>
+      <ul class="ingredientes">
+        <li>150g yogur griego</li>
+        <li>10g nueces o almendras</li>
+        <li>1 cdita miel o frutos rojos</li>
+      </ul>
+      <div class="tags"><span class="tag snack">media tarde</span></div>
+      <div class="macros">
+        <div class="macro"><strong>210</strong>kcal</div>
+        <div class="macro"><strong>18g</strong>P</div>
+        <div class="macro"><strong>15g</strong>C</div>
+        <div class="macro"><strong>9g</strong>G</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- DÍA TIPO LINDA -->
+  <h2 style="margin-top: 35px; color: var(--rosa); text-align:center;">📅 Días tipo (ejemplos armados)</h2>
+
+  <div class="dia-tipo linda">
+    <h3>🍑 Día tipo de Linda — ~1810 kcal</h3>
+    <table>
+      <thead><tr><th>Momento</th><th>Comida</th><th>kcal</th><th>P</th><th>C</th><th>G</th></tr></thead>
+      <tbody>
+        <tr><td>Desayuno</td><td>Avena bowl con huevos</td><td>450</td><td>27</td><td>55</td><td>14</td></tr>
+        <tr><td>Media mañana</td><td>Yogur griego + nueces</td><td>210</td><td>18</td><td>15</td><td>9</td></tr>
+        <tr><td>Almuerzo</td><td>Pollo + arroz basmati + ensalada</td><td>600</td><td>45</td><td>55</td><td>22</td></tr>
+        <tr><td>Post-entreno</td><td>Banana + mantequilla maní</td><td>290</td><td>9</td><td>32</td><td>16</td></tr>
+        <tr><td>Cena</td><td>Pescado blanco + vegetales</td><td>420</td><td>35</td><td>35</td><td>14</td></tr>
+      </tbody>
+      <tfoot><tr><td colspan="2">TOTAL</td><td>1970</td><td>134g</td><td>192g</td><td>75g</td></tr></tfoot>
+    </table>
+    <div class="nota" id="comparativa-linda">
+      ✏️ <strong>Cómo ajustar:</strong> Este día = <strong>1970 kcal · 134g proteína</strong>. Llena tus datos arriba para ver cuánto te sobra o te falta vs tu objetivo personal.
+    </div>
+  </div>
+
+  <div class="dia-tipo alan">
+    <h3>💪 Día tipo de Alan — ~2010 kcal</h3>
+    <table>
+      <thead><tr><th>Momento</th><th>Comida</th><th>kcal</th><th>P</th><th>C</th><th>G</th></tr></thead>
+      <tbody>
+        <tr><td>Desayuno</td><td>Tortilla 3 huevos + tostada aguacate</td><td>480</td><td>26</td><td>28</td><td>28</td></tr>
+        <tr><td>Media mañana</td><td>Yogur griego + nueces</td><td>210</td><td>18</td><td>15</td><td>9</td></tr>
+        <tr><td>Almuerzo</td><td>Salmón + camote + brócoli</td><td>620</td><td>38</td><td>50</td><td>28</td></tr>
+        <tr><td>Post-entreno</td><td>Batido whey + banana + avena</td><td>380</td><td>32</td><td>50</td><td>5</td></tr>
+        <tr><td>Cena</td><td>Atún + ensalada + tostada</td><td>400</td><td>32</td><td>28</td><td>18</td></tr>
+      </tbody>
+      <tfoot><tr><td colspan="2">TOTAL</td><td>2090</td><td>146g</td><td>171g</td><td>88g</td></tr></tfoot>
+    </table>
+    <div class="nota" id="comparativa-alan">
+      ✏️ <strong>Cómo ajustar:</strong> Este día = <strong>2090 kcal · 146g proteína</strong>. Llena tus datos arriba para ver cuánto te sobra o te falta vs tu objetivo personal.
+    </div>
+  </div>
+
+  <!-- REGLAS GENERALES -->
+  <div class="seccion" style="background: linear-gradient(135deg, #ede9fe, #ddd6fe); border-left: 6px solid #7c3aed;">
+    <h2 style="color: #6d28d9;">🧠 Reglas prácticas para los 2</h2>
+    <ol style="padding-left: 25px;">
+      <li><strong>Carbs ANTES y DESPUÉS de entrenar.</strong> En esas dos comidas no los reduzcan. Son combustible.</li>
+      <li><strong>Proteína en TODAS las comidas.</strong> 25-40g cada vez. Es la clave para no perder músculo.</li>
+      <li><strong>Mitad del plato siempre verde.</strong> Vegetales sin contar calorías — llenan, hidratan, antiinflamatorio.</li>
+      <li><strong>Cocinen con aceite de oliva.</strong> Para saltear bajo, también aguacate o coco. Eviten freír.</li>
+      <li><strong>Día libre 1 vez/semana.</strong> No "trampa total", sino flexible: pizza casera, una cerveza, postre. Sostenible &gt; perfecto.</li>
+      <li><strong>Pesen la comida</strong> las primeras 2 semanas. Después calculan a ojo. Es la diferencia entre creer y saber.</li>
+      <li><strong>Cúrcuma + pimienta negra todos los días.</strong> Antiinflamatorio natural. En arroz, tortilla, batido, lo que sea.</li>
+      <li><strong>Hidratación:</strong> Linda ~2.5L, Alan ~3L. Agua, té verde, infusiones. Cero gaseosas ni jugos.</li>
+    </ol>
+  </div>
+
+  <footer>
+    🥗 Hecho con cariño · Imprime con Ctrl+P · Datos guardados en el navegador
+  </footer>
+
+</div>
+
+<script>
+  // Constantes del día tipo (para comparar con metas)
+  const DIA_LINDA = { kcal: 1970, prot: 134 };
+  const DIA_ALAN = { kcal: 2090, prot: 146 };
+
+  // Calcular metas Linda (pérdida de grasa AGRESIVA)
+  function calcularLinda() {
+    const peso = parseFloat(document.getElementById('l_peso').value);
+    const altura = parseFloat(document.getElementById('l_altura').value);
+    const edad = parseFloat(document.getElementById('l_edad').value);
+    const act = parseFloat(document.getElementById('l_actividad').value);
+
+    if (!peso || !altura || !edad) {
+      document.getElementById('linda_kcal').textContent = '~1700';
+      document.getElementById('linda_prot').textContent = '110-130';
+      document.getElementById('linda_agua').textContent = '~2.3';
+      return null;
+    }
+
+    // Mifflin-St Jeor mujer
+    const bmr = (10 * peso) + (6.25 * altura) - (5 * edad) - 161;
+    const tdee = bmr * act;
+    const objetivo = Math.round(tdee - 550); // déficit agresivo
+    const protMin = Math.round(peso * 1.8);
+    const protMax = Math.round(peso * 2.2);
+    const agua = (peso * 35 / 1000).toFixed(1);
+
+    document.getElementById('linda_kcal').textContent = objetivo;
+    document.getElementById('linda_prot').textContent = protMin + '-' + protMax;
+    document.getElementById('linda_agua').textContent = agua;
+
+    return { kcal: objetivo, protMin: protMin, protMax: protMax };
+  }
+
+  // Calcular metas Alan (fuerza - mantenimiento)
+  function calcularAlan() {
+    const peso = parseFloat(document.getElementById('a_peso').value);
+    const altura = parseFloat(document.getElementById('a_altura').value);
+    const edad = parseFloat(document.getElementById('a_edad').value);
+    const act = parseFloat(document.getElementById('a_actividad').value);
+
+    if (!peso || !altura || !edad) {
+      document.getElementById('alan_kcal').textContent = '~2400';
+      document.getElementById('alan_prot').textContent = '150-180';
+      document.getElementById('alan_agua').textContent = '~3';
+      return null;
+    }
+
+    // Mifflin-St Jeor hombre
+    const bmr = (10 * peso) + (6.25 * altura) - (5 * edad) + 5;
+    const tdee = bmr * act;
+    const objetivo = Math.round(tdee); // mantenimiento para fuerza
+    const protMin = Math.round(peso * 1.8);
+    const protMax = Math.round(peso * 2.2);
+    const agua = (peso * 35 / 1000).toFixed(1);
+
+    document.getElementById('alan_kcal').textContent = objetivo;
+    document.getElementById('alan_prot').textContent = protMin + '-' + protMax;
+    document.getElementById('alan_agua').textContent = agua;
+
+    return { kcal: objetivo, protMin: protMin, protMax: protMax };
+  }
+
+  // Actualizar comparativas en los días tipo
+  function actualizarComparativas() {
+    const lindaMeta = calcularLinda();
+    const alanMeta = calcularAlan();
+
+    // Comparativa Linda
+    const compL = document.getElementById('comparativa-linda');
+    if (lindaMeta) {
+      const diffKcal = DIA_LINDA.kcal - lindaMeta.kcal;
+      const protOk = DIA_LINDA.prot >= lindaMeta.protMin;
+      let msg = '🎯 <strong>Tu meta:</strong> ' + lindaMeta.kcal + ' kcal · ' + lindaMeta.protMin + '-' + lindaMeta.protMax + 'g proteína<br>';
+      msg += '📊 <strong>Este día:</strong> ' + DIA_LINDA.kcal + ' kcal · ' + DIA_LINDA.prot + 'g proteína<br>';
+      if (Math.abs(diffKcal) <= 100) {
+        msg += '✅ <strong>Perfecto:</strong> está casi en tu meta. Mantén porciones.';
+      } else if (diffKcal > 100) {
+        msg += '⚠️ <strong>Sobran ' + diffKcal + ' kcal.</strong> Sugerencia: quita el snack de media mañana (-210 kcal) o reduce arroz en almuerzo.';
+      } else {
+        msg += '⚠️ <strong>Faltan ' + Math.abs(diffKcal) + ' kcal.</strong> Sugerencia: agrega 1 fruta + 10g almendras (+150 kcal) o más arroz en almuerzo.';
+      }
+      if (!protOk) {
+        msg += '<br>🥩 Proteína baja para tu meta. Agrega 1 huevo extra al desayuno o 30g pollo al almuerzo.';
+      }
+      compL.innerHTML = msg;
+    }
+
+    // Comparativa Alan
+    const compA = document.getElementById('comparativa-alan');
+    if (alanMeta) {
+      const diffKcal = DIA_ALAN.kcal - alanMeta.kcal;
+      const protOk = DIA_ALAN.prot >= alanMeta.protMin;
+      let msg = '🎯 <strong>Tu meta:</strong> ' + alanMeta.kcal + ' kcal · ' + alanMeta.protMin + '-' + alanMeta.protMax + 'g proteína<br>';
+      msg += '📊 <strong>Este día:</strong> ' + DIA_ALAN.kcal + ' kcal · ' + DIA_ALAN.prot + 'g proteína<br>';
+      if (Math.abs(diffKcal) <= 100) {
+        msg += '✅ <strong>Perfecto:</strong> está casi en tu meta. Mantén porciones.';
+      } else if (diffKcal > 100) {
+        msg += '⚠️ <strong>Sobran ' + diffKcal + ' kcal.</strong> Sugerencia: reduce aceite del almuerzo o quita media tarde.';
+      } else {
+        msg += '⚠️ <strong>Faltan ' + Math.abs(diffKcal) + ' kcal.</strong> Sugerencia: agrega 1 banana + 1 cda mantequilla maní (+290 kcal) post-entreno o más arroz/camote.';
+      }
+      if (!protOk) {
+        msg += '<br>🥩 Proteína baja para tu meta. Agrega 1 scoop whey extra (+25g) o 50g pollo más.';
+      }
+      compA.innerHTML = msg;
+    }
+
+    // Aviso general
+    const aviso = document.getElementById('comparativa-aviso');
+    if (lindaMeta || alanMeta) {
+      aviso.innerHTML = '✅ <strong>Datos cargados.</strong> Cuando bajen de peso, actualicen el peso arriba y todo se recalcula. Las recomendaciones de abajo se ajustan automáticamente.';
+    }
+  }
+
+  // Cargar/guardar inputs
+  const todosInputs = ['l_peso','l_altura','l_edad','l_actividad','a_peso','a_altura','a_edad','a_actividad'];
+  todosInputs.forEach(id => {
+    const el = document.getElementById(id);
+    const guardado = localStorage.getItem('comidas_' + id);
+    if (guardado) el.value = guardado;
+    el.addEventListener('input', () => {
+      localStorage.setItem('comidas_' + id, el.value);
+      actualizarComparativas();
+    });
+    el.addEventListener('change', () => {
+      localStorage.setItem('comidas_' + id, el.value);
+      actualizarComparativas();
+    });
+  });
+
+  // Sincronización: intenta leer los datos guardados en las rutinas semanales
+  function sincronizar() {
+    let cargado = 0;
+    let aviso = '';
+
+    // Linda usa prefijo gym_
+    const lindaMap = { l_peso: 'gym_p_peso', l_altura: 'gym_p_altura', l_edad: 'gym_p_edad', l_actividad: 'gym_p_actividad' };
+    Object.entries(lindaMap).forEach(([destino, origen]) => {
+      const val = localStorage.getItem(origen);
+      if (val) {
+        document.getElementById(destino).value = val;
+        localStorage.setItem('comidas_' + destino, val);
+        cargado++;
+      }
+    });
+
+    // Alan usa prefijo alan_
+    const alanMap = { a_peso: 'alan_p_peso', a_altura: 'alan_p_altura', a_edad: 'alan_p_edad', a_actividad: 'alan_p_actividad' };
+    Object.entries(alanMap).forEach(([destino, origen]) => {
+      const val = localStorage.getItem(origen);
+      if (val) {
+        document.getElementById(destino).value = val;
+        localStorage.setItem('comidas_' + destino, val);
+        cargado++;
+      }
+    });
+
+    const sa = document.getElementById('sync-aviso');
+    if (cargado > 0) {
+      sa.innerHTML = '✅ Sincronizados <strong>' + cargado + ' datos</strong> desde las rutinas semanales. Revisa que estén correctos.';
+      sa.style.color = 'var(--verde)';
+    } else {
+      sa.innerHTML = '⚠️ No se encontraron datos guardados. Si abriste este archivo en distinto navegador o equipo, llena los datos manualmente aquí.';
+      sa.style.color = '#dc2626';
+    }
+    actualizarComparativas();
+  }
+
+  // Auto-intentar sincronizar al cargar (si no hay datos en este archivo)
+  window.addEventListener('load', () => {
+    const yaTieneDatos = localStorage.getItem('comidas_l_peso') || localStorage.getItem('comidas_a_peso');
+    if (!yaTieneDatos) {
+      // Intenta auto-sincronizar
+      sincronizar();
+    } else {
+      actualizarComparativas();
+    }
+  });
+
+  // Calcular inicial
+  actualizarComparativas();
+</script>
+</body>
+</html>
