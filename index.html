@@ -290,6 +290,22 @@
 
   </div>
 
+  <!-- BACKUP / SYNC -->
+  <div style="background: linear-gradient(135deg, #ede9fe, #ddd6fe); border-radius: 16px; padding: 22px 25px; margin-bottom: 25px; border-left: 6px solid #7c3aed;">
+    <h3 style="color: #6d28d9; margin-bottom: 8px;">☁️ Llevar mis datos a otro dispositivo</h3>
+    <p style="font-size: 0.9em; color: #4c1d95; margin-bottom: 14px;">
+      Los datos viven en este navegador. Para usarlos en tu celular o en otro PC:
+      <strong>1)</strong> Exporta aquí → <strong>2)</strong> Mándate el archivo por WhatsApp/Drive/Email → <strong>3)</strong> Abre FitHub en el otro dispositivo y dale a "Importar".
+    </p>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+      <button onclick="exportarDatos()" style="background: #7c3aed; color: white; border: none; padding: 10px 18px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 0.9em; box-shadow: 0 3px 10px rgba(124, 58, 237, 0.3);">📥 Exportar respaldo</button>
+      <label for="importar-input" style="background: #16a34a; color: white; padding: 10px 18px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 0.9em; box-shadow: 0 3px 10px rgba(22, 163, 74, 0.3);">📤 Importar respaldo</label>
+      <input type="file" id="importar-input" accept=".json" style="display: none;" onchange="importarDatos(event)">
+      <button onclick="mostrarStats()" style="background: white; color: #4c1d95; border: 1px solid #c4b5fd; padding: 10px 18px; border-radius: 20px; cursor: pointer; font-weight: bold; font-size: 0.9em;">📊 ¿Qué tengo guardado?</button>
+    </div>
+    <div id="backup-info" style="font-size: 0.85em; color: #6b7280; margin-top: 12px; font-style: italic;"></div>
+  </div>
+
   <!-- TIPS -->
   <div class="tips-box">
     <h3>🌟 Para arrancar</h3>
@@ -342,6 +358,115 @@
     `;
   }
   cargarStats();
+
+  // ===== BACKUP / RESTORE =====
+  function exportarDatos() {
+    const data = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      data[key] = localStorage.getItem(key);
+    }
+
+    if (Object.keys(data).length === 0) {
+      mostrarMsg('⚠️ No hay datos guardados todavía. Llena tu perfil en las rutinas primero.', 'warn');
+      return;
+    }
+
+    const exportObj = {
+      app: 'FitHub',
+      version: 1,
+      fechaExport: new Date().toISOString(),
+      datos: data
+    };
+
+    const blob = new Blob([JSON.stringify(exportObj, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    const fecha = new Date().toISOString().split('T')[0];
+    a.href = url;
+    a.download = 'fithub-backup-' + fecha + '.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    mostrarMsg('✅ Respaldo descargado: <strong>fithub-backup-' + fecha + '.json</strong>. Mándatelo por WhatsApp, Drive o email para abrirlo en otros dispositivos.', 'ok');
+  }
+
+  function importarDatos(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const obj = JSON.parse(e.target.result);
+
+        // Validación
+        if (!obj.datos || typeof obj.datos !== 'object') {
+          throw new Error('No parece un archivo de FitHub válido.');
+        }
+
+        const cantidad = Object.keys(obj.datos).length;
+        if (!confirm('Vas a importar ' + cantidad + ' datos del archivo:\n\n' + file.name + '\n\nEsto SOBRESCRIBE los datos actuales de este dispositivo. ¿Continuar?')) {
+          event.target.value = '';
+          return;
+        }
+
+        Object.entries(obj.datos).forEach(([key, value]) => {
+          localStorage.setItem(key, value);
+        });
+
+        mostrarMsg('✅ <strong>' + cantidad + ' datos importados</strong>. Recargando...', 'ok');
+        setTimeout(() => location.reload(), 1500);
+      } catch (err) {
+        mostrarMsg('❌ Archivo no válido: ' + err.message, 'error');
+      }
+      event.target.value = '';
+    };
+    reader.readAsText(file);
+  }
+
+  function mostrarStats() {
+    const total = localStorage.length;
+    if (total === 0) {
+      mostrarMsg('📭 No tienes datos guardados todavía.', 'warn');
+      return;
+    }
+
+    // Contar por categoría
+    let lindaCount = 0, alanCount = 0, otros = 0;
+    let historialLinda = 0, historialAlan = 0;
+
+    for (let i = 0; i < total; i++) {
+      const key = localStorage.key(i);
+      if (key.startsWith('gym_')) lindaCount++;
+      else if (key.startsWith('alan_')) alanCount++;
+      else if (key === 'historial_linda') {
+        try { historialLinda = JSON.parse(localStorage.getItem(key)).length; } catch(e) {}
+      }
+      else if (key === 'historial_alan') {
+        try { historialAlan = JSON.parse(localStorage.getItem(key)).length; } catch(e) {}
+      }
+      else otros++;
+    }
+
+    const msg = '📊 <strong>Tienes ' + total + ' datos guardados:</strong><br>'
+      + '🍑 Linda: ' + lindaCount + ' checks/perfil · 📊 ' + historialLinda + ' registros históricos<br>'
+      + '💪 Alan: ' + alanCount + ' checks/perfil · 📊 ' + historialAlan + ' registros históricos<br>'
+      + (otros > 0 ? '🔧 Otros: ' + otros : '');
+    mostrarMsg(msg, 'info');
+  }
+
+  function mostrarMsg(html, tipo) {
+    const el = document.getElementById('backup-info');
+    el.innerHTML = html;
+    el.style.fontStyle = 'normal';
+    if (tipo === 'ok') el.style.color = '#047857';
+    else if (tipo === 'error') el.style.color = '#dc2626';
+    else if (tipo === 'warn') el.style.color = '#c2410c';
+    else el.style.color = '#4c1d95';
+  }
 </script>
 </body>
 </html>
